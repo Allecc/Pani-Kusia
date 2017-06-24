@@ -1,0 +1,84 @@
+extends layout
+block content
+    script.
+        $(function () {
+            $.ajax({
+                url: "/load",
+                success: function (JSON) {
+                    var dane = "";
+                    var input = $('.data-input');
+                    input.css('height', (JSON.length/3 * 150));
+                    for (var id = JSON.length - 1; id >= 0; id--) {
+                        dane +=
+                            "<div class='product milky'>" +
+                                "<div>" +
+                                    "<h3 id='tytul'>" +
+                                        JSON[id].title +
+                                    "</h3>" +
+                                        JSON[id].description +
+                                        "<br />" +
+                                        "<strong id='autor'>" +
+                                            JSON[id].price +
+                                        "</strong>" +
+                                        "<h3> <a href= '/product/" + id + "'" + "> Here </a> </h3> " +
+                                "</div>" +
+                            "</div>";
+                    }
+                    input.append(dane);
+                }
+            });
+        });
+    div.row.col-md-12.spacing#title
+        div.row.col-md-8.col-md-offset-2.title-container.well
+            h1.col-md-offset-4.col-md-4.text-center.milky Pani Kusia
+    div.row.col-md-12.spacing#produkty
+        div.row.col-md-8.col-md-offset-2.well
+                div.data-input
+    div.row.col-md-12.spacing#o-sklepie
+        div.row.col-md-8.col-md-offset-2.well
+            section.milky
+              | Lorem ipsum dolor sit amet enim.
+              | Etiam ullamcorper. Suspendisse a pellentesque dui, non felis.
+              | Maecenas malesuada elit lectus felis, malesuada ultricies. Curabitur et ligula.
+              | Ut molestie a, ultricies porta urna. Vestibulum commodo volutpat a, convallis ac,
+              | laoreet enim. Phasellus fermentum in, dolor. Pellentesque facilisis. Nulla imperdiet sit
+              | amet magna. Vestibulum dapibus, mauris nec malesuada fames ac turpis velit, rhoncus eu, luctus et
+              | interdum adipiscing wisi. Aliquam erat ac ipsum. Integer aliquam purus. Quisque lorem tortor fringilla sed,
+              | vestibulum id, eleifend justo vel bibendum sapien massa ac turpis faucibus orci luctus non,
+              | consectetuer lobortis quis, varius in, purus. Integer ultrices posuere cubilia Curae,
+              | Nulla ipsum dolor lacus, suscipit adipiscing. Cum sociis natoque penatibus et ultrices volutpat. Nullam wisi ultricies a,
+              | gravida vitae, dapibus risus ante sodales lectus blandit eu, tempor diam pede cursus vitae, ultricies eu, faucibus quis, porttitor eros
+              | cursus lectus, pellentesque eget, bibendum a, gravida ullamcorper quam. Nullam viverra consectetuer. Quisque cursus et, porttitor risus. Aliquam sem.
+              | In hendrerit nulla quam nunc, accumsan congue. Lorem ipsum primis in nibh vel risus. Sed vel lectus. Ut sagittis, ipsum dolor quam.
+              | Lorem ipsum dolor sit amet enim.
+              | Etiam ullamcorper. Suspendisse a pellentesque dui, non felis.
+              | Maecenas malesuada elit lectus felis, malesuada ultricies. Curabitur et ligula.
+              | Ut molestie a, ultricies porta urna. Vestibulum commodo volutpat a, convallis ac,
+              | laoreet enim. Phasellus fermentum in, dolor. Pellentesque facilisis. Nulla imperdiet sit
+              | amet magna. Vestibulum dapibus, mauris nec malesuada fames ac turpis velit, rhoncus eu, luctus et
+              | interdum adipiscing wisi. Aliquam erat ac ipsum. Integer aliquam purus. Quisque lorem tortor fringilla sed,
+              | vestibulum id, eleifend justo vel bibendum sapien massa ac turpis faucibus orci luctus non,
+              | consectetuer lobortis quis, varius in, purus. Integer ultrices posuere cubilia Curae,
+              | Nulla ipsum dolor lacus, suscipit adipiscing. Cum sociis natoque penatibus et ultrices volutpat. Nullam wisi ultricies a,
+              | gravida vitae, dapibus risus ante sodales lectus blandit eu, tempor diam pede cursus vitae, ultricies eu, faucibus quis, porttitor eros
+              | cursus lectus, pellentesque eget, bibendum a, gravida ullamcorper quam. Nullam viverra consectetuer. Quisque cursus et, porttitor risus. Aliquam sem.
+              | In hendrerit nulla quam nunc, accumsan congue. Lorem ipsum primis in nibh vel risus. Sed vel lectus. Ut sagittis, ipsum dolor quam| Etiam ullamcorper. Suspendisse a pellentesque dui, non felis.
+              | Maecenas malesuada elit lectus felis, malesuada ultricies. Curabitur et ligula.
+              | Ut molestie a, ultricies porta urna. Vestibulum commodo volutpat a, convallis ac,
+              | laoreet enim. Phasellus fermentum in, dolor. Pellentesque facilisis. Nulla imperdiet sit
+              | amet magna. Vestibulum dapibus, mauris nec malesuada fames ac turpis velit, rhoncus eu, luctus et
+              | interdum adipiscing wisi. Aliquam erat ac ipsum. Integer aliquam purus. Quisque lorem tortor fringilla sed,
+              | vestibulum id, eleifend justo vel bibendum sapien massa ac turpis faucibus orci luctus non,
+              | consectetuer lobortis quis, varius in, purus. Integer ultrices posuere cubilia Curae,
+              | Nulla ipsum dolor lacus, suscipit adipiscing. Cum sociis natoque penatibus et ultrices volutpat. Nullam wisi ultricies a,
+              | gravida vitae, dapibus risus ante sodales lectus blandit eu, tempor diam pede cursus vitae, ultricies eu, faucibus quis, porttitor eros
+              | ursus lectus, pellentesque eget, bibendum a, gravida ullamcorper quam. Nullam viverra consectetuer. Quisque cursus et, porttitor risus. Aliquam sem.
+              | In hendrerit nulla quam nunc, accumsan congue. Lorem ipsum primis in nibh vel risus. Sed vel lectus. Ut sagittis, ipsum dolor quam
+    div.row.col-md-12.spacing#kontakt
+        div.row.col-md-8.col-md-offset-2.well
+            div.milky
+                form
+                    input(type='text')
+                    input(type='submit')
+    footer.row.col-md-12.text-center
+        small Since 2017
