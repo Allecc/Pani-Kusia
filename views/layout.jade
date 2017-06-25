@@ -20,6 +20,8 @@ html
           a(href='/o-sklepie') O Mnie
         li
           a(href='/kontakt') Kontakt
+      if user
+        a(href='/logout').logout-btn Wyloguj
 
   body.container-fluid
     block content

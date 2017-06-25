@@ -4,6 +4,18 @@
 extends layout
 block content
     script.
+        function deleteProduct(id) {
+            if(confirm('Jesteś pewien?')) {
+                var path = '/product/' + id;
+                $.ajax(path, {method: 'DELETE'});
+                location.reload();
+            }
+        }
+        function editProduct(id) {
+            path = ".edit-form" + id;
+            $(path + '> input').prop('disabled', false);
+            $(path + '> textarea').prop('disabled', false);
+        }
         $(function () {
             $.ajax({
                 url: "/load",
@@ -14,9 +26,9 @@ block content
                     for (var id = JSON.length - 1; id >= 0; id--) {
                         var product = JSON[id];
                         dane +=
-                            "<button class='row col-md-12' data-toggle='collapse' data-target='#product" + id +"'> Pokaż " + product.title + "</button>" +
-                            "<div class='row col-md-12 milky collapse product-list' id ='product" + id +"'>" +
-                                "<form  class = 'col-md-6 well' id = 'edit-form' action='/add' method='POST'>" +
+                            "<button class='row col-md-12' data-toggle='collapse' data-target='#product" + product.id +"'> Pokaż " + product.title + "</button>" +
+                            "<div class='row col-md-12 milky collapse product-list' id ='product" + product.id +"'>" +
+                                "<form action = '/update/" + product.id + "' class = 'col-md-6 well edit-form" + product.id + "' action='/add' method='POST'>" +
                                     "<b>Nazwa produktu:</b><br>" +
                                     "<input type='text' name='title' value='" + product.title + "' disabled/><br>" +
                                     "<b>Opis: </b><br>" +
@@ -30,8 +42,8 @@ block content
                                 "<img class = 'col-md-3' src='" + product.image +"' />" +
                                 "<div class='col-md-2 text-center'> " +
                                     "<div>" +
-                                        "<button type='button' class='btn btn-warning admin-buttons' > Edytuj </button><br>" +
-                                        "<button type'button' class='btn btn-danger admin-buttons'> Usuń </button>" +
+                                        "<button type='button' class='btn btn-warning admin-buttons' onclick='editProduct(" + product.id + ")'> Edytuj </button><br>" +
+                                        "<button type'button' class='btn btn-danger admin-buttons' onclick='deleteProduct(" + product.id + ")'> Usuń </button>" +
                                     "</div>" +
                                 "</div>" +
                             "</div>";
@@ -57,8 +69,9 @@ block content
                         div
                             button(type = 'submit') Loguj
         if user
-            div.row.col-md-12
-                div.row.col-md-offset-2.col-md-8.spacing.well.text-center
+            div.row.col-md-12.spacing
+                button(data-toggle='collapse' data-target='#add-products').row.col-md-12 Dodaj produkty
+                div.row.col-md-offset-2.col-md-8.well.text-center#add-products.collapse
                     h3 Dodaj produkty
                     form(action='/add', method='POST' id='add-form').text-left
                         b Nazwij produkt:

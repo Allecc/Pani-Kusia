@@ -65,15 +65,35 @@ router.get('/product/:id', function(req, res){
         });
 });
 
-router.delete('/product/:id', function(req, res){
+router.delete('/product/:id', function(req){
     Product.findById(Number(req.params.id))
         .then(function (product){
             console.log('Destroyed: ' + product.title);
             product.destroy();
-            res.redirect('back');
         });
+    sequelize.sync();
 });
 
+router.post('/update/:id', function (req, res) {
+    let data = {
+        'title': req.body.title,
+        'description': req.body.description,
+        'price': req.body.price,
+        'image': req.body.image
+    };
+
+    Product.findById(Number(req.params.id))
+        .then(function (product){
+            product.updateAttributes({
+                'title': data.title,
+                'description': data.description,
+                'price': data.price,
+                'image': data.image
+            });
+        });
+
+    res.redirect('/admin');
+});
 
 /* Add data to database */
 router.post('/add', function(req, res){
@@ -96,20 +116,6 @@ router.post('/add', function(req, res){
     sequelize.sync();
 
     res.redirect('/admin');
-});
-
-router.get('/test', function(req, res){
-
-    User
-        .build({ username: "admin", password: "admin", status: 0})
-        .save()
-        .then(function (returnSaved){})
-        .catch(function (error) {
-        });
-    sequelize.sync();
-
-
-    res.redirect('/');
 });
 
 // LOGIN
@@ -141,6 +147,11 @@ router.post('/login',
         console.log('rage');
         res.render('admin', { user: req.user});
     });
+
+router.get('/logout', function(req, res){
+    req.logout();
+    res.redirect('/admin');
+});
 
 /* Admin page */
 router.get('/admin', function (req, res) {
