@@ -12,20 +12,28 @@ block content
                     var input = $('.data-input');
                     input.css('height', (JSON.length / 3 * 150));
                     for (var id = JSON.length - 1; id >= 0; id--) {
+                        var product = JSON[id];
                         dane +=
-                            "<button class='row col-md-12' data-toggle='collapse' data-target='#product" + id +"'> Pokaż " + JSON[id].title + "</button>" +
-                            "<div class='product milky collapse' id ='product" + id +"'>" +
-                            "<div>" +
-                            "<h3 id='tytul'>" +
-                            JSON[id].title +
-                            "</h3>" +
-                            JSON[id].description +
-                            "<br />" +
-                            "<strong id='autor'>" +
-                            JSON[id].price +
-                            "</strong>" +
-                            "<h3> <a href= '/product/" + id + "'" + "> Here </a> </h3> " +
-                            "</div>" +
+                            "<button class='row col-md-12' data-toggle='collapse' data-target='#product" + id +"'> Pokaż " + product.title + "</button>" +
+                            "<div class='row col-md-12 milky collapse product-list' id ='product" + id +"'>" +
+                                "<form  class = 'col-md-6 well' id = 'edit-form' action='/add' method='POST'>" +
+                                    "<b>Nazwa produktu:</b><br>" +
+                                    "<input type='text' name='title' value='" + product.title + "' disabled/><br>" +
+                                    "<b>Opis: </b><br>" +
+                                    "<textarea name = 'description' form='edit-form' disabled>" + product.description + "</textarea><br>" +
+                                    "<b>Cena:</b><br>" +
+                                    "<input type='text' name='price' value='" + product.price + "'disabled/><br>" +
+                                    "<b>Link obrazka:</b><br>" +
+                                    "<input type='text' name='image' value='" + product.image + "'disabled/>" +
+                                    "<input type='submit' disabled/>" +
+                                "</form>" +
+                                "<img class = 'col-md-3' src='" + product.image +"' />" +
+                                "<div class='col-md-2 text-center'> " +
+                                    "<div>" +
+                                        "<button type='button' class='btn btn-warning admin-buttons' > Edytuj </button><br>" +
+                                        "<button type'button' class='btn btn-danger admin-buttons'> Usuń </button>" +
+                                    "</div>" +
+                                "</div>" +
                             "</div>";
                     }
                     input.append(dane);
@@ -50,19 +58,23 @@ block content
                             button(type = 'submit') Loguj
         if user
             div.row.col-md-12
-                div.row.col-md-offset-2.col-md-8.spacing.well
-                    h1 Dodaj produkty
-                    form(action='/add', method='POST')
+                div.row.col-md-offset-2.col-md-8.spacing.well.text-center
+                    h3 Dodaj produkty
+                    form(action='/add', method='POST' id='add-form').text-left
                         b Nazwij produkt:
+                        br
                         input(type='text', name='title')
                         br
                         b Dodaj opis:
-                        input(type='text', name='description')
+                        br
+                        textarea(type='text', name='description' form='add-form')
                         br
                         b Dodaj cenę:
+                        br
                         input(type='text', name='price')
                         br
                         b Obrazek produktu:
+                        br
                         input(type='text', name='image')
                         input(type='submit')
             div.row.col-md-12.data-input

@@ -43,6 +43,22 @@ body {
     box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
 }
 
+.to-right {
+    float: right;
+}
+
+.to-left {
+    float: left;
+}
+
+.product-list img {
+    margin: 0 3% 0 3%;
+}
+
+.admin-buttons {
+    margin: 5%;
+}
+
 footer {
     border: 1px solid #e7e7e7;
     background-color: #f8f8f8;
