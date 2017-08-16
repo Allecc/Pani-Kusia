@@ -1,0 +1,74 @@
+.parallax {
+  opacity: 0.75;
+  position: relative;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+/* First image (Logo. Full height) */
+.parallax1 {
+  background-image: url('/images/parallax1.jpeg');
+  min-height: 100%;
+}
+
+
+/* Second image (Products) */
+.parallax2 {
+  background-image: url("/images/parallax2.jpeg");
+  min-height: 300px;
+}
+
+
+/* Third image (Kontakt) */
+.parallax3 {
+  background-image: url("/images/parallax3.jpeg");
+  min-height: 300px;
+}
+
+
+/* Forth image (Footer) */
+.parallax4 {
+  background-image: url("/images/parallax4.jpeg");
+  min-height: 300px;
+}
+
+.parallax-center {
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform: translate(-50%,-50%);
+  -ms-transform: translate(-50%,-50%);
+}
+
+.parallax-logo-background {
+  background-color: black;
+}
+
+.logo-animate-opacity{
+  animation:opac 0.8s
+  }@keyframes opac{
+    from{
+      opacity: 0;
+    } to {
+      opacity: 0.6;
+    }
+}
+
+.parallax-text {
+  color: white;
+  letter-spacing: 4px;
+  font-size: 36px!important;
+}
+
+.parallax-logo {
+  padding: 25px;
+  font-size: 28px!important;
+  white-space: nowrap;
+}
+
+.parallax5 {
+  background-image: url('/images/productsBackground.jpg');
+  min-height: 100%;
+}

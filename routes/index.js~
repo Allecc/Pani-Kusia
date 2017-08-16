@@ -1,0 +1,77 @@
+var express = require('express');
+var router = express.Router();
+var fs = require('fs');
+var mysql = require('mysql');
+
+var Sequelize = require('sequelize');
+var sequelize = new Sequelize('SLEDZIEWSKI','sledziew_1111033','97054181', {
+                               host: '172.30.24.12', // nazwa hosta
+                               port: 3306 // numer portu
+                               });
+
+var Project = sequelize.define('Project', {
+    title: Sequelize.STRING,
+    date: Sequelize.DATE
+});
+
+var Ogloszenie = sequelize.define('Ogloszenie', {
+    title: Sequelize.STRING,
+    description: Sequelize.TEXT,
+    author: Sequelize.STRING
+});
+
+
+/* GET home page. */
+router.get('/', function(req, res) {
+		res.render('index', { title: 'Tablica ogloszeń'	});
+});
+
+
+/* Create database connection */
+router.get('/prepare_to_work', function(req, res){
+	sequelize.sync();
+    	Ogloszenie.belongsTo(Project);
+	Project.hasMany(Ogloszenie);
+
+	console.log('Base prepared to operate!');
+	res.redirect('/');
+});
+
+/* Get information from database */
+router.get('/load', function(req, res){
+    sequelize.sync();
+    Ogloszenie.findAll(
+    	{raw: true}	// Get JSON
+    ).then( function (ogloszenie) {
+        res.json(ogloszenie);
+    });
+});
+
+/* Add data to database */
+router.post('/add', function(req, res){
+	sequelize.sync();
+
+	var data = {
+		"title": req.body.title,
+		"author": req.body.author, 
+		"description": req.body.description
+	}
+
+	Ogloszenie
+		.build({ title: data.title, description: data.description, author: data.author, status: 0})
+		.save()
+		.then(function (returnSaved){})
+			.catch(function (error) {
+			});
+
+    Project
+        .build({ title: data.title, date: new Date()})
+        .save()
+        .then(function (returnSaved){})
+        .catch(function (error) {
+        });
+
+	
+  res.redirect('/');
+});
+module.exports = router;
