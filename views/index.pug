@@ -1,0 +1,331 @@
+extends layout
+block content
+	// First Parallax ( LOGO )
+	#home.parallax.parallax1
+		.parallax-center
+			span.parallax-text.parallax-logo.parallax-logo-background.logo-animate-opacity
+				| PANI KUSIA
+	// About Section
+	#about.row.textContainers
+		h3.text-center O Sklepie
+		p
+			| Parallax scrolling is a web site trend where the background content is moved at a different speed than the foreground content while scrolling. Nascetur per nec posuere turpis, lectus nec libero turpis nunc at, sed posuere mollis ullamcorper libero ante lectus, blandit pellentesque a, magna turpis est sapien duis blandit dignissim. Viverra interdum mi magna mi, morbi sociis. Condimentum dui ipsum consequat morbi, curabitur aliquam pede, nullam vitae eu placerat eget et vehicula. Varius quisque non molestie dolor, nunc nisl dapibus vestibulum at, sodales tincidunt mauris ullamcorper, dapibus pulvinar, in in neque risus odio. Accumsan fringilla vulputate at quibusdam sociis eleifend, aenean maecenas vulputate, non id vehicula lorem mattis, ratione interdum sociis ornare. Suscipit proin magna cras vel, non sit platea sit, maecenas ante augue etiam maecenas, porta porttitor placerat leo.
+
+	// Second Parallax ( PRODUCTS )
+	.parallax.parallax2
+		.parallax-center
+			span.parallax-text
+				| Produkty
+
+	// Products Section
+	#products.row
+		.col-sm-12.textContainers(ng-controller='produktyController')
+			.col-md-3.col-sm-6(ng-repeat='product in produkty')
+				.productContainer
+					img(ng-src='/images/products/{{ product.image }}.jpeg' ng-mouseover='product.show = !product.show' ng-mouseleave='product.show = !product.show')
+					.overlay(ng-show='product.show' ng-mouseover='product.show = "true"' ng-mouseleave='product.show = !product.show')
+						.textOverly
+							h2 {{product.title}}
+							span {{ product.description }}
+							.row.product-price
+								span.price-left
+									a(href = 'product/{{product.id}}')
+										| Więcej
+										i.fa.fa-angle-double-right(aria-hidden='true')
+								span.price-right
+									a
+										i.fa.fa-shopping-cart(aria-hidden='true') Cena {{product.price | currency: '': 2}}
+
+	// Third Parallax ( CONTACT )
+	.parallax.parallax3
+		.parallax-center
+			span.parallax-text
+				| Kontakt
+
+	// Contact Form Section
+	#contact.row.textContainers
+		.container
+			.go-left.address-text.col-sm-6
+				div
+					| ul. Czerwone Maki 80
+					br
+					| 30-392 Kraków
+					.contacts
+						i.fa.fa-phone-square.fa-lg(aria-hidden='true')
+						|  123 456 789
+						br
+						i.fa.fa-envelope.fa-lg(aria-hidden='true')
+						|  kontakt@PaniKusia.pl
+				h2 Napisz do nas:
+					form#contact-form.contact-form(action='/send', method='post')
+						.row
+							.col-md-6
+								.form-group
+									input#Name.form-control(type='text', name='name', autocomplete='off', placeholder='Imię Nazwisko')
+							.col-md-6
+								.form-group
+									input#email.form-control(type='email', name='email', autocomplete='off', placeholder='E-mail')
+						.row
+							.col-md-12
+								.form-group
+									input#emailTitle.form-control(type='emailTitle', name='emailTitle', autocomplete='off', placeholder='Tytuł')
+						.row
+							.col-md-12
+								.form-group
+									textarea#Message.form-control.textarea(rows='3', name='message', placeholder='Wiadomość...', form='contact-form')
+						.row
+							.col-md-12
+								button.btn.main-btn.pull-right(type='submit')
+									i.fa.fa-paper-plane(aria-hidden='true')
+									|  Wyślij
+									
+			#map.go-right.address-map.col-sm-6
+			script.
+				function myMap() {
+					var myCenter = new google.maps.LatLng(50.020741, 19.892340);
+					var map = new google.maps.Map(document.getElementById("map"), {
+					center: myCenter,
+					zoom: 18,
+					disableDefaultUI: true,
+					styles: [
+						{
+							"elementType": "geometry",
+							"stylers": [
+								{
+									"color": "#212121"
+								}
+							]
+						},
+						{
+							"elementType": "labels.icon",
+							"stylers": [
+								{
+									"visibility": "off"
+								}
+							]
+						},
+						{
+							"elementType": "labels.text.fill",
+							"stylers": [
+								{
+									"color": "#757575"
+								}
+							]
+						},
+						{
+							"elementType": "labels.text.stroke",
+							"stylers": [
+								{
+									"color": "#212121"
+								}
+							]
+						},
+						{
+							"featureType": "administrative",
+							"elementType": "geometry",
+							"stylers": [
+								{
+									"color": "#757575"
+								},
+								{
+									"visibility": "off"
+								}
+							]
+						},
+						{
+							"featureType": "administrative.country",
+							"elementType": "labels.text.fill",
+							"stylers": [
+								{
+									"color": "#9e9e9e"
+								}
+							]
+						},
+						{
+							"featureType": "administrative.land_parcel",
+							"stylers": [
+								{
+									"visibility": "off"
+								}
+							]
+						},
+						{
+							"featureType": "administrative.locality",
+							"elementType": "labels.text.fill",
+							"stylers": [
+								{
+									"color": "#bdbdbd"
+								}
+							]
+						},
+						{
+							"featureType": "poi",
+							"stylers": [
+								{
+									"visibility": "off"
+								}
+							]
+						},
+						{
+							"featureType": "poi",
+							"elementType": "labels.text.fill",
+							"stylers": [
+								{
+									"color": "#757575"
+								}
+							]
+						},
+						{
+							"featureType": "poi.park",
+							"elementType": "geometry",
+							"stylers": [
+								{
+									"color": "#181818"
+								}
+							]
+						},
+						{
+							"featureType": "poi.park",
+							"elementType": "labels.text.fill",
+							"stylers": [
+								{
+									"color": "#616161"
+								}
+							]
+						},
+						{
+							"featureType": "poi.park",
+							"elementType": "labels.text.stroke",
+							"stylers": [
+								{
+									"color": "#1b1b1b"
+								}
+							]
+						},
+						{
+							"featureType": "road",
+							"elementType": "geometry.fill",
+							"stylers": [
+								{
+									"color": "#2c2c2c"
+								}
+							]
+						},
+						{
+							"featureType": "road",
+							"elementType": "labels.icon",
+							"stylers": [
+								{
+									"visibility": "off"
+								}
+							]
+						},
+						{
+							"featureType": "road",
+							"elementType": "labels.text.fill",
+							"stylers": [
+								{
+									"color": "#8a8a8a"
+								}
+							]
+						},
+						{
+							"featureType": "road.arterial",
+							"elementType": "geometry",
+							"stylers": [
+								{
+									"color": "#373737"
+								}
+							]
+						},
+						{
+							"featureType": "road.highway",
+							"elementType": "geometry",
+							"stylers": [
+								{
+									"color": "#3c3c3c"
+								}
+							]
+						},
+						{
+							"featureType": "road.highway.controlled_access",
+							"elementType": "geometry",
+							"stylers": [
+								{
+									"color": "#4e4e4e"
+								}
+							]
+						},
+						{
+							"featureType": "road.local",
+							"elementType": "labels.text.fill",
+							"stylers": [
+								{
+									"color": "#616161"
+								}
+							]
+						},
+						{
+							"featureType": "transit",
+							"stylers": [
+								{
+									"visibility": "off"
+								}
+							]
+						},
+						{
+							"featureType": "transit",
+							"elementType": "labels.text.fill",
+							"stylers": [
+								{
+									"color": "#757575"
+								}
+							]
+						},
+						{
+							"featureType": "water",
+							"elementType": "geometry",
+							"stylers": [
+								{
+									"color": "#000000"
+								}
+							]
+						},
+						{
+							"featureType": "water",
+							"elementType": "labels.text.fill",
+							"stylers": [
+								{
+									"color": "#3d3d3d"
+								}
+							]
+						}
+					]
+					});
+					var marker = new google.maps.Marker({
+						position: myCenter
+					});
+					marker.setMap(map);
+				}
+			script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyAVFYr7pl9NDay_rxS5iWiOPo2igIVy1JQ&callback=myMap')
+
+	// Forth Parallax ( BEFORE FOOTER )
+	.parallax.parallax4
+		.parallax-center
+			span.parallax-text
+
+	// Footer
+	footer.textContainers.text-center
+		a.w3-button.w3-light-grey(href='#home')
+			i.fa.fa-arrow-up.w3-margin-right
+			| To the top
+		.w3-xlarge.w3-section
+			i.fa.fa-facebook-onicial.w3-hover-opacity
+			i.fa.fa-instagram.w3-hover-opacity
+			i.fa.fa-snapchat.w3-hover-opacity
+			i.fa.fa-pinterest-p.w3-hover-opacity
+			i.fa.fa-twitter.w3-hover-opacity
+			i.fa.fa-linkedin.w3-hover-opacity
+
+	// Products control script
+	script(src='/javascripts/products.js')

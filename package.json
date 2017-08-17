@@ -1,17 +1,35 @@
 {
-  "name": "ogloszenia",
-  "version": "0.0.0",
+  "name": "panikusia",
+  "version": "0.0.7",
   "private": true,
-  "scripts": {
-    "start": "node ./bin/www"
-  },
   "dependencies": {
     "body-parser": "~1.16.0",
-    "cookie-parser": "~1.4.3",
+    "cookie-parser": "^1.4.3",
     "debug": "~2.6.0",
     "express": "~4.14.1",
-    "jade": "~1.11.0",
     "morgan": "~1.7.0",
+    "nodemailer": "^4.0.1",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "pug": "^2.0.0-rc.3",
+    "sequelize": "^4.5.0",
     "serve-favicon": "~2.3.2"
-  }
+  },
+  "description": "Prosty sklep w NodeJS. Frontend - Parallax One Page, wykorzystanie AngularJS, Bootstrap. Backend: Express.",
+  "main": "app.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Allecc/SimpleShop.git"
+  },
+  "keywords": [
+    "shop",
+    "nodejs",
+    "angularjs"
+  ],
+  "author": "Jan Śledziewski",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Allecc/SimpleShop/issues"
+  },
+  "homepage": "https://github.com/Allecc/SimpleShop#readme"
 }

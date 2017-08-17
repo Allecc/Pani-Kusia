@@ -1,0 +1,55 @@
+doctype html
+html
+  meta(charset='utf-8' lang="pl" name="viewport" content="width=device-width,  initial-scale=1.0")
+  head
+    title= title
+    
+    // Stylesheets
+    link(rel='stylesheet', href='/stylesheets/style.css')
+    link(rel='stylesheet', href='/stylesheets/menu.css')
+    link(rel='stylesheet', href='/stylesheets/backgrounds.css')
+    link(rel='stylesheet', href='/stylesheets/products.css')
+    // w3 Css
+    link(rel='stylesheet', href='https://www.w3schools.com/w3css/4/w3.css')
+    // Bootstrap CSS 
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css', integrity='sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u', crossorigin='anonymous')
+    // jQuery
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js')
+    // Bootstrap JS
+    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js', integrity='sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa', crossorigin='anonymous')
+    // AngularJS
+    script(src='https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js')
+    script(src='https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.min.js')
+    script(src='https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-resource.min.js')
+    // Font Comfortaa
+    link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Comfortaa")
+    // Font Lato
+    link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Lato')
+    // Font Awesome
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css')
+    // Menu control script
+    script(src='/javascripts/menu.js')
+    .w3-top
+      #myNavbar.w3-bar
+        a.w3-bar-item.w3-button.w3-hover-black.w3-hide-medium.w3-hide-large.w3-right(href='javascript:void(0);', onclick='toggleFunction()', title='Toggle Navigation Menu')
+          i.fa.fa-bars
+        a.w3-bar-item.w3-button(href='/home') HOME
+        a.w3-bar-item.w3-button.w3-hide-small(href='/about')
+          i.fa.fa-user
+          |  O SKLEPIE
+        a.w3-bar-item.w3-button.w3-hide-small(href='/products')
+          i.fa.fa-th
+          |  PRODUKTY
+        a.w3-bar-item.w3-button.w3-hide-small(href='/contact')
+          i.fa.fa-envelope
+          |  KONTAKT
+        a.w3-bar-item.w3-button.w3-hide-small.w3-right.w3-hover-red(href='#')
+          i.fa.fa-search
+      // Navbar on small screens
+      #navDemo.w3-bar-block.w3-white.w3-hide.w3-hide-large.w3-hide-medium
+        a.w3-bar-item.w3-button(href='/about', onclick='toggleFunction()') O SKLEPIE
+        a.w3-bar-item.w3-button(href='/products', onclick='toggleFunction()') PRODUKTY
+        a.w3-bar-item.w3-button(href='/contact', onclick='toggleFunction()') KONTAKT
+        a.w3-bar-item.w3-button(href='#') SEARCH
+  body.container-fluid(ng-app="paniKusia")
+    block content

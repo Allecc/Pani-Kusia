@@ -2,12 +2,24 @@ const express = require('express');
 const router = express.Router();
 const passport = require('passport');
 const Strategy = require('passport-local').Strategy;
+const nodemailer = require('nodemailer');
 
 var Sequelize = require('sequelize');
 var sequelize = new Sequelize('appbase', 'root', '', {
   dialect: 'mysql',
   host: 'localhost', // nazwa hosta
   port: 3306 // numer portu
+});
+
+// create reusable transporter object using the default SMTP transport
+let transporter = nodemailer.createTransport({
+    host: 's1.ct8.pl',
+    port: 465,
+    secure: true, // secure:true for port 465, secure:false for port 587
+    auth: {
+        user: 'allecx@allecx.ct8.pl',
+        pass: 'Siajek1995'
+    }
 });
 
 var title = 'Pani Kusia';
@@ -104,6 +116,26 @@ router.post('/add', function(req, res) {
   sequelize.sync();
 
   res.redirect('/admin');
+});
+
+router.post('/send', function(req, res){
+  // setup email data with unicode symbols
+  var mailOptions = {
+      from: req.body.name + ' ' + req.body.email, // sender address
+      to: 'siaj3k@gmail.com', // list of receivers
+      subject: req.body.emailTitle, // Subject line
+      text: req.body.message, // plain text body
+      html: req.body.message, // html body
+      replyTo: req.body.email // reply field
+  };
+  // send mail with defined transport object
+  transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+          return console.log(error);
+      }
+      console.log('Message %s sent: %s', info.messageId, info.response);
+  })
+  res.redirect('/#contact');
 });
 
 router.get('/test', function(req, res) {

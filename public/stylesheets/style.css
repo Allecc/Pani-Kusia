@@ -10,6 +10,14 @@ a {
   text-decoration: none;
 }
 
+.go-right {
+  float: right;
+}
+
+.go-left {
+  float: left;
+}
+
 .text-center {
   text-align: center!important;
 }
@@ -19,6 +27,27 @@ a {
   background-color: white;
   padding: 50px 80px;
   text-align: justify;
+}
+
+.address-text {
+  font-size: 28px;
+}
+
+.address-text h2 {
+  margin-top: 20px;
+}
+.address-map {
+  -webkit-box-shadow: 1px 2px 9px 1px rgb(26, 39, 50);
+  box-shadow: 1px 2px 9px 1px rgb(26, 39, 50);
+}
+
+.contacts {
+  margin-top: 10px;
+  font-size: 22px;
+}
+
+#map {
+  height: 400px;
 }
 
 footer {
