@@ -19,7 +19,10 @@ app.set('view engine', 'pug');
 
 // Use application-level middleware for common functionality, including
 // logging, parsing, and session handling.
-app.use(require('morgan')('combined'));
+app.use(require('morgan')('dev', {
+  // Skip non error
+  skip: function (req, res) { return res.statusCode < 400 }
+}));
 app.use(require('cookie-parser')());
 app.use(require('body-parser').urlencoded({ extended: true }));
 app.use(require('express-session')({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
@@ -30,8 +33,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
+app.use(favicon(path.join(__dirname,'public','images','favicon.ico')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -58,5 +60,7 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-app.listen(3000);
+app.listen(3000, function(){
+  console.log('Server started!');
+});
 module.exports = app;

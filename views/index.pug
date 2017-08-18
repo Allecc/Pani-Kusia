@@ -3,8 +3,8 @@ block content
 	// First Parallax ( LOGO )
 	#home.parallax.parallax1
 		.parallax-center
-			span.parallax-text.parallax-logo.parallax-logo-background.logo-animate-opacity
-				| PANI KUSIA
+			span.parallax-text.parallax-logo.logo-animate-opacity PANI KUSIA
+	
 	// About Section
 	#about.row.textContainers
 		h3.text-center O Sklepie
@@ -14,33 +14,31 @@ block content
 	// Second Parallax ( PRODUCTS )
 	.parallax.parallax2
 		.parallax-center
-			span.parallax-text
-				| Produkty
+			span.parallax-text Produkty
 
 	// Products Section
 	#products.row
 		.col-sm-12.textContainers(ng-controller='produktyController')
 			.col-md-3.col-sm-6(ng-repeat='product in produkty')
 				.productContainer
-					img(ng-src='/images/products/{{ product.image }}.jpeg' ng-mouseover='product.show = !product.show' ng-mouseleave='product.show = !product.show')
+					img(ng-src='/images/products/{{ product.image }}.jpeg' ng-mouseover='product.show = !product.show' ng-mouseleave='product.show = !product.show' alt='product{{product.id}}')
 					.overlay(ng-show='product.show' ng-mouseover='product.show = "true"' ng-mouseleave='product.show = !product.show')
 						.textOverly
 							h2 {{product.title}}
 							span {{ product.description }}
-							.row.product-price
-								span.price-left
-									a(href = 'product/{{product.id}}')
-										| Więcej
-										i.fa.fa-angle-double-right(aria-hidden='true')
-								span.price-right
-									a
-										i.fa.fa-shopping-cart(aria-hidden='true') Cena {{product.price | currency: '': 2}}
+							.product-price
+								span.go-left
+									a.products-links(href = 'product/{{product.id}}') Więcej 
+										i.fa.fa-angle-double-right.fa-lg(aria-hidden='true')
+								span.go-right
+									a.products-links(href='/backet-add/{{product.id}}')
+										i.fa.fa-shopping-cart.fa-lg(aria-hidden='true')
+										|  Cena {{product.price | currency: '': 2}}
 
 	// Third Parallax ( CONTACT )
 	.parallax.parallax3
 		.parallax-center
-			span.parallax-text
-				| Kontakt
+			span.parallax-text Kontakt
 
 	// Contact Form Section
 	#contact.row.textContainers
@@ -80,252 +78,23 @@ block content
 									|  Wyślij
 									
 			#map.go-right.address-map.col-sm-6
-			script.
-				function myMap() {
-					var myCenter = new google.maps.LatLng(50.020741, 19.892340);
-					var map = new google.maps.Map(document.getElementById("map"), {
-					center: myCenter,
-					zoom: 18,
-					disableDefaultUI: true,
-					styles: [
-						{
-							"elementType": "geometry",
-							"stylers": [
-								{
-									"color": "#212121"
-								}
-							]
-						},
-						{
-							"elementType": "labels.icon",
-							"stylers": [
-								{
-									"visibility": "off"
-								}
-							]
-						},
-						{
-							"elementType": "labels.text.fill",
-							"stylers": [
-								{
-									"color": "#757575"
-								}
-							]
-						},
-						{
-							"elementType": "labels.text.stroke",
-							"stylers": [
-								{
-									"color": "#212121"
-								}
-							]
-						},
-						{
-							"featureType": "administrative",
-							"elementType": "geometry",
-							"stylers": [
-								{
-									"color": "#757575"
-								},
-								{
-									"visibility": "off"
-								}
-							]
-						},
-						{
-							"featureType": "administrative.country",
-							"elementType": "labels.text.fill",
-							"stylers": [
-								{
-									"color": "#9e9e9e"
-								}
-							]
-						},
-						{
-							"featureType": "administrative.land_parcel",
-							"stylers": [
-								{
-									"visibility": "off"
-								}
-							]
-						},
-						{
-							"featureType": "administrative.locality",
-							"elementType": "labels.text.fill",
-							"stylers": [
-								{
-									"color": "#bdbdbd"
-								}
-							]
-						},
-						{
-							"featureType": "poi",
-							"stylers": [
-								{
-									"visibility": "off"
-								}
-							]
-						},
-						{
-							"featureType": "poi",
-							"elementType": "labels.text.fill",
-							"stylers": [
-								{
-									"color": "#757575"
-								}
-							]
-						},
-						{
-							"featureType": "poi.park",
-							"elementType": "geometry",
-							"stylers": [
-								{
-									"color": "#181818"
-								}
-							]
-						},
-						{
-							"featureType": "poi.park",
-							"elementType": "labels.text.fill",
-							"stylers": [
-								{
-									"color": "#616161"
-								}
-							]
-						},
-						{
-							"featureType": "poi.park",
-							"elementType": "labels.text.stroke",
-							"stylers": [
-								{
-									"color": "#1b1b1b"
-								}
-							]
-						},
-						{
-							"featureType": "road",
-							"elementType": "geometry.fill",
-							"stylers": [
-								{
-									"color": "#2c2c2c"
-								}
-							]
-						},
-						{
-							"featureType": "road",
-							"elementType": "labels.icon",
-							"stylers": [
-								{
-									"visibility": "off"
-								}
-							]
-						},
-						{
-							"featureType": "road",
-							"elementType": "labels.text.fill",
-							"stylers": [
-								{
-									"color": "#8a8a8a"
-								}
-							]
-						},
-						{
-							"featureType": "road.arterial",
-							"elementType": "geometry",
-							"stylers": [
-								{
-									"color": "#373737"
-								}
-							]
-						},
-						{
-							"featureType": "road.highway",
-							"elementType": "geometry",
-							"stylers": [
-								{
-									"color": "#3c3c3c"
-								}
-							]
-						},
-						{
-							"featureType": "road.highway.controlled_access",
-							"elementType": "geometry",
-							"stylers": [
-								{
-									"color": "#4e4e4e"
-								}
-							]
-						},
-						{
-							"featureType": "road.local",
-							"elementType": "labels.text.fill",
-							"stylers": [
-								{
-									"color": "#616161"
-								}
-							]
-						},
-						{
-							"featureType": "transit",
-							"stylers": [
-								{
-									"visibility": "off"
-								}
-							]
-						},
-						{
-							"featureType": "transit",
-							"elementType": "labels.text.fill",
-							"stylers": [
-								{
-									"color": "#757575"
-								}
-							]
-						},
-						{
-							"featureType": "water",
-							"elementType": "geometry",
-							"stylers": [
-								{
-									"color": "#000000"
-								}
-							]
-						},
-						{
-							"featureType": "water",
-							"elementType": "labels.text.fill",
-							"stylers": [
-								{
-									"color": "#3d3d3d"
-								}
-							]
-						}
-					]
-					});
-					var marker = new google.maps.Marker({
-						position: myCenter
-					});
-					marker.setMap(map);
-				}
-			script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyAVFYr7pl9NDay_rxS5iWiOPo2igIVy1JQ&callback=myMap')
 
 	// Forth Parallax ( BEFORE FOOTER )
 	.parallax.parallax4
-		.parallax-center
-			span.parallax-text
 
 	// Footer
 	footer.textContainers.text-center
-		a.w3-button.w3-light-grey(href='#home')
-			i.fa.fa-arrow-up.w3-margin-right
+		a.btn(href='#home')
+			i.fa.fa-arrow-up.w3-margin-right 
 			| To the top
-		.w3-xlarge.w3-section
-			i.fa.fa-facebook-onicial.w3-hover-opacity
-			i.fa.fa-instagram.w3-hover-opacity
-			i.fa.fa-snapchat.w3-hover-opacity
-			i.fa.fa-pinterest-p.w3-hover-opacity
-			i.fa.fa-twitter.w3-hover-opacity
-			i.fa.fa-linkedin.w3-hover-opacity
+		.row.col-md-12
+			a.btn(href="http://", target="_blank") 
+				i.fa.fa-facebook-official.fa-lg
+			a.btn(href="http://", target="_blank")
+				i.fa.fa-instagram.fa-lg
 
 	// Products control script
 	script(src='/javascripts/products.js')
+	// Map scirpts
+	script(src='javascripts/map.js')
+	script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyAVFYr7pl9NDay_rxS5iWiOPo2igIVy1JQ&callback=myMap')

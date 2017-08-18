@@ -1,8 +1,36 @@
+#myNavbar {
+  width: 100%;
+}
+
 .navbar {
   position: fixed!important;
   width: 100%;
-  border-radius: 0!important;
-  padding: 0;
-  margin: 0 0 0 -15px;
+  top: 0;
   z-index: 1;
+  border: 0!important;
+}
+
+.navbar a {
+  color: #505050!important;
+  text-decoration: none!important;
+}
+
+.navbar a:hover {
+  color: white!important;
+  text-decoration: none!important;
+  background-color: #bebebe!important;
+}
+
+.menu-btn {
+  display: inline-block;
+  padding: 6px 12px;
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: normal;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
 }

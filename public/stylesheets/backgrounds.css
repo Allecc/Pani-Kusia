@@ -42,10 +42,6 @@
   -ms-transform: translate(-50%,-50%);
 }
 
-.parallax-logo-background {
-  background-color: black;
-}
-
 .logo-animate-opacity{
   animation:opac 0.8s
   }@keyframes opac{
@@ -66,6 +62,7 @@
   padding: 25px;
   font-size: 28px!important;
   white-space: nowrap;
+  background-color: black;
 }
 
 .parallax5 {
