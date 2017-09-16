@@ -44,5 +44,5 @@ html(lang="pl")
         a.menu-btn(href='#products', onclick='toggleFunction()') PRODUKTY
         a.menu-btn(href='#contact', onclick='toggleFunction()') KONTAKT
         a.menu-btn(href='#') SEARCH
-  body.container-fluid
+  body.container-fluid(ng-app='paniKusia' ng-controller='kusiaCtrl')
     block content

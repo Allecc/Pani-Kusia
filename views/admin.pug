@@ -1,11 +1,11 @@
 extends layout
 block content
-  .row(style='margin-top: 5%' ng-app='adminKusia' ng-controller='adminKusiaCtrl')
+  .row(style='margin-top: 5%' ng-app='adminKusia' ng-controller='kusiaCtrl')
     ul.col-md-2
       li.btn.btn-default.col-md-12(ng-click='informationTab()') Dashboard
       li.btn.btn-default.col-md-12(ng-click='userTab()') Użytkownicy
       li.btn.btn-default.col-md-12(ng-click='productsTab()') Produkty
-      li.btn.btn-default.col-md-12 O Mnie
+      li.btn.btn-default.col-md-12(ng-click='aboutTab()') O Mnie
       li.btn.btn-default.col-md-12 Kontakt
     .col-md-10
       .row
@@ -51,6 +51,10 @@ block content
                       .row
                         strong.col-md-6 Cena: {{product.price}}
                         strong.col-md-6 Kategoria: {{product.CategoryId}}
+        .col-md-12(ng-show='tab.about')
+          button.btn.btn-default(data-toggle="modal" data-target="#modalEditAbout") Edytuj
+          h2 {{about.title}}
+          p {{about.content}}
       // Modals here  
       #modalAddProduct.modal.fade(role='dialog')
         .modal-dialog.modal-lg
@@ -95,6 +99,24 @@ block content
               pre.form-group {{newCategory}}              
             .modal-footer
               button.btn.btn-success(type='button', ng-click='addCategory()') Zapisz
+              button.btn.btn-warning(type='reset') Wyczysc
+              button.btn.btn-danger(type='button', data-dismiss='modal') Zamknij  
+      #modalEditAbout.modal.fade(role='dialog')
+        .modal-dialog.modal-lg
+          // Modal content
+          .modal-content
+            .modal-title
+              h2 Edytuj 'About'
+            form.modal-body              
+              .form-group
+                label Tytuł: 
+                input.form-control(type='text', ng-model='about.title' ng-value='about.title')              
+              .form-group
+                label Informacje: 
+                textarea.form-control(rows='3', ng-model='about.content' ng-value='about.content')  
+              pre.form-group {{about}}              
+            .modal-footer
+              button.btn.btn-success(type='button', ng-click='editAbout()') Zapisz
               button.btn.btn-warning(type='reset') Wyczysc
               button.btn.btn-danger(type='button', data-dismiss='modal') Zamknij  
 

@@ -1,6 +1,6 @@
 angular
   .module('paniKusia', [])
-  .controller('produktyController', function ($scope, $window, $http) {
+  .controller('kusiaCtrl', function ($scope, $window, $http) {
     var screenWidth = $window.innerWidth;
     if(screenWidth < 1024){
       $scope.displayText = 'true'
@@ -8,10 +8,18 @@ angular
       $scope.displayText = 'false';
     }
 
-    // Loading about
+    $scope.about = {
+      title: '',
+      content: ''
+    }
+    // get about
     $http.get('/get/about')
       .then( res => {
-        $scope.about = res.data;
+        console.log(res.data[0]);
+        $scope.about = {
+          title: res.data[0].title,
+          content: res.data[0].content
+        }
       });
 
     // Loading categories

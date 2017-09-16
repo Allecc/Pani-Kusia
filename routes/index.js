@@ -5,7 +5,7 @@ const Strategy = require('passport-local').Strategy;
 const nodemailer = require('nodemailer');
 
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize('panikusia', 'root', '', {
+const sequelize = new Sequelize('kusia', 'root', '', {
   dialect: 'mysql',
   host: 'localhost', // nazwa hosta
   port: 3306
@@ -43,6 +43,7 @@ const About = sequelize.define('About', {
   content: Sequelize.TEXT
 })
 sequelize.sync(); //  force sync - if tables doesnt exist sequelize will create them
+Details.belongsTo(User); // user can have their information
 Product.belongsTo(Category); // products have their categories
 Product.belongsToMany(User, {through: 'userProducts'}); // user can have many products in basket
 
@@ -76,7 +77,20 @@ router.get('/', function(req, res) {
 /* About endpoints */
 // Return about infromation
 router.get('/get/about', function(req, res){
+  About.findAll()
+    .then( about => {
+      res.json(about);
+    });
 });
+
+router.put('/edit/about', function(req, res){
+  About.findById(1)
+    .then( item => {
+      item.update(req.body);
+    });
+
+  res.status(200).end();
+})
 /* End about endpoints */
 
 /* Categories endpoints */
