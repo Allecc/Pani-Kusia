@@ -1,9 +1,7 @@
 doctype html
 html(lang="pl")
   meta(charset='utf-8' name="viewport" content="width=device-width,  initial-scale=1.0")
-  head
-    title= title
-    
+  head    
     // Stylesheets
     link(rel='stylesheet', href='/stylesheets/style.css')
     link(rel='stylesheet', href='/stylesheets/menu.css')
@@ -11,45 +9,40 @@ html(lang="pl")
     link(rel='stylesheet', href='/stylesheets/products.css')
     // w3 Css
     link(rel='stylesheet', href='https://www.w3schools.com/w3css/4/w3.css')
-    // Bootstrap CSS 
-    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css', integrity='sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u', crossorigin='anonymous')
-    // jQuery
-    script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js')
-    // Bootstrap JS
-    script(src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js', integrity='sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa', crossorigin='anonymous')
-    // AngularJS
-    script(src='https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js')
-    script(src='https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.min.js')
-    script(src='https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-resource.min.js')
-    // Font Comfortaa
+      
+    script(src='/js/jquery.min.js')
+    script(src='/js/bootstrap.min.js')
+    script(src='/js/angular.js')
+    script(type='text/javascript', src='/js/ui-bootstrap-tpls.js')
+      
+    link(rel='stylesheet', href='/css/bootstrap.min.css')
+    link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css')
     link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Comfortaa")
-    // Font Lato
-    link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Lato')
-    // Font Awesome
-    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css')
+    link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato")
+      
     // Menu control script
     script(src='/javascripts/menu.js')
     .navbar
       #myNavbar.menu-btn-group
         a.menu-btn.w3-hover-black.w3-hide-medium.w3-hide-large.w3-right(href='javascript:void(0);', onclick='toggleFunction()', title='Toggle Navigation Menu')
           i.fa.fa-bars
-        a.menu-btn.menu-btn(href='/home') HOME
-        a.menu-btn.w3-hide-small(href='/about')
+        a.menu-btn.menu-btn(href='#') HOME
+        a.menu-btn.w3-hide-small(href='#about')
           i.fa.fa-user
           |  O SKLEPIE
-        a.menu-btn.w3-hide-small(href='/products')
+        a.menu-btn.w3-hide-small(href='#products')
           i.fa.fa-th-large
           |  PRODUKTY
-        a.menu-btn.w3-hide-small(href='/contact')
+        a.menu-btn.w3-hide-small(href='#contact')
           i.fa.fa-envelope
           |  KONTAKT
         a.menu-btn.w3-hide-small.go-right(href='#')
           i.fa.fa-search
       // Navbar on small screens
       #navDemo.w3-bar-block.w3-white.w3-hide.w3-hide-large.w3-hide-medium
-        a.menu-btn(href='/about', onclick='toggleFunction()') O SKLEPIE
-        a.menu-btn(href='/products', onclick='toggleFunction()') PRODUKTY
-        a.menu-btn(href='/contact', onclick='toggleFunction()') KONTAKT
+        a.menu-btn(href='#about', onclick='toggleFunction()') O SKLEPIE
+        a.menu-btn(href='#products', onclick='toggleFunction()') PRODUKTY
+        a.menu-btn(href='#contact', onclick='toggleFunction()') KONTAKT
         a.menu-btn(href='#') SEARCH
-  body.container-fluid(ng-app="paniKusia")
+  body.container-fluid
     block content

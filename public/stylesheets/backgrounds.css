@@ -65,7 +65,7 @@
   background-color: black;
 }
 
-.parallax5 {
+.parallax-single-product {
   background-image: url('/images/productsBackground.jpg');
   min-height: 100%;
 }

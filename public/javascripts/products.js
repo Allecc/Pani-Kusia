@@ -7,8 +7,18 @@ angular
     } else {
       $scope.displayText = 'false';
     }
-    $http.get("/load")
-      .then(function (response) {
-      $scope.produkty = response.data;
+
+    // Loading about
+    $http.get('/get/about')
+      .then( res => {
+        $scope.about = res.data;
       });
+
+    // Loading categories
+    $http.get('/get/categories')
+      .then( res => {
+        $scope.categories = res.data;
+      });
+
+    // Loading contact
   });

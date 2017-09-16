@@ -1,68 +1,101 @@
-//
-   Created by Jan Śledziewski on 18.05.2017.
-
 extends layout
 block content
-    script.
-        $(function () {
-            $.ajax({
-                url: "/load",
-                success: function (JSON) {
-                    var dane = "";
-                    var input = $('.data-input');
-                    input.css('height', (JSON.length / 3 * 150));
-                    for (var id = JSON.length - 1; id >= 0; id--) {
-                        dane +=
-                            "<button class='row col-md-12' data-toggle='collapse' data-target='#product" + id +"'> Pokaż " + JSON[id].title + "</button>" +
-                            "<div class='product milky collapse' id ='product" + id +"'>" +
-                            "<div>" +
-                            "<h3 id='tytul'>" +
-                            JSON[id].name +
-                            "</h3>" +
-                            JSON[id].description +
-                            "<br />" +
-                            "<strong id='autor'>" +
-                            JSON[id].price +
-                            "</strong>" +
-                            "<h3> <a href= '/product/" + id + "'" + "> Here </a> </h3> " +
-                            "</div>" +
-                            "</div>";
-                    }
-                    input.append(dane);
-                }
-            });
-        });
+  .row(style='margin-top: 5%' ng-app='adminKusia' ng-controller='adminKusiaCtrl')
+    ul.col-md-2
+      li.btn.btn-default.col-md-12(ng-click='informationTab()') Dashboard
+      li.btn.btn-default.col-md-12(ng-click='userTab()') Użytkownicy
+      li.btn.btn-default.col-md-12(ng-click='productsTab()') Produkty
+      li.btn.btn-default.col-md-12 O Mnie
+      li.btn.btn-default.col-md-12 Kontakt
+    .col-md-10
+      .row
+        .col-md-12(ng-show='tab.dashboard')
+          h1.center Jakiś tekst informacyjny
+        .col-md-12(ng-if='tab.users')
+          ul
+            li(repeat='user in users') {{user}}
+        .col-md-12(ng-show='tab.products')
+          .row
+            .col-md-12 
+              h3 Produkty
+              hr
+          .row
+            button.btn.btn-default.col-md-6(data-toggle="modal" data-target="#modalAddProduct") Dodaj Produkt
+            button.btn.btn-default.col-md-6(data-toggle="modal" data-target="#modalAddCategory") Dodaj Kategorię
+          .row              
+            .col-md-12
+              .row(ng-repeat='category in categories')
+                .col-md-12
+                  .row
+                    h3.col-md-10 {{category.name}}
+                    button.col-md-2.btn.btn-default Edit
+                    hr.col-md-12
+                  .row
+                    .well.col-md-4(ng-repeat='product in products | filter: { CategoryId: category.id }') 
+                      strong {{product.title}}
+                      p {{product.description}}
+                      p {{product.image}}
+                      .row
+                        strong.col-md-6 Cena: {{product.price}}
+                        strong.col-md-6 Kategoria: {{product.CategoryId}}
+              .row
+                .col-md-12
+                  h3 Bez kategorii
+                .row  
+                  hr.col-md-12
+                  .row
+                    .well.col-md-4(ng-repeat='product in products | filter: { CategoryId: "!" }') 
+                      strong {{product.title}}
+                      p {{product.description}}
+                      p {{product.image}}
+                      .row
+                        strong.col-md-6 Cena: {{product.price}}
+                        strong.col-md-6 Kategoria: {{product.CategoryId}}
+      // Modals here  
+      #modalAddProduct.modal.fade(role='dialog')
+        .modal-dialog.modal-lg
+          // Modal content
+          .modal-content
+            .modal-title
+              h2 Dodaj produkt
+            form.modal-body              
+              .form-group
+                label Nazwa: 
+                input.form-control(type='text', ng-model='newProduct.title')
+              .form-group
+                label Opis: 
+                textarea.form-control(rows='2', ng-model='newProduct.description')   
+              .form-group
+                label Cena: 
+                input.form-control(type='text', ng-model='newProduct.price')   
+              .form-group
+                label Zdjęcie: 
+                input.form-control(type='text', ng-model='newProduct.image') 
+              .form-group
+                label Kategoria:
+                ol
+                  li(ng-repeat='category in categories')
+                    input(type='radio', name='kategoria', ng-model='newProduct.CategoryId', value='{{category.id}}') 
+                    span  {{category.name}}  
+              pre.form-group {{newProduct}}              
+            .modal-footer
+              button.btn.btn-success(type='button', ng-click='addProduct()') Zapisz
+              button.btn.btn-warning(type='reset') Wyczysc
+              button.btn.btn-danger(type='button', data-dismiss='modal') Zamknij
+      #modalAddCategory.modal.fade(role='dialog')
+        .modal-dialog.modal-sm
+          // Modal content
+          .modal-content
+            .modal-title
+              h2 Dodaj kategorię
+            form.modal-body              
+              .form-group
+                label Nazwa: 
+                input.form-control(type='text', ng-model='newCategory.name')
+              pre.form-group {{newCategory}}              
+            .modal-footer
+              button.btn.btn-success(type='button', ng-click='addCategory()') Zapisz
+              button.btn.btn-warning(type='reset') Wyczysc
+              button.btn.btn-danger(type='button', data-dismiss='modal') Zamknij  
 
-    div.row.col-md-offset-2.col-md-8
-        unless user
-            div.login-form.row.col-md-4.col-md-offset-4.spacing
-                div
-                    form(action = '/login', method='post')
-                        div
-                            label
-                                b Login:
-                            input(type = 'text', placeholder='Podaj login...', name='username')
-                        div
-                            label
-                                b Hasło:
-                            input(type = 'password', placeholder='Wpisz hasło...', name='password')
-                        div
-                            button(type = 'submit') Loguj
-        if user
-            div.row.col-md-12
-                div.row.col-md-offset-2.col-md-8.spacing.well
-                    h1 Dodaj produkty
-                    form(action='/add', method='POST')
-                        b Nazwij produkt:
-                        input(type='text', name='title')
-                        br
-                        b Dodaj opis:
-                        input(type='text', name='description')
-                        br
-                        b Dodaj cenę:
-                        input(type='text', name='price')
-                        br
-                        b Obrazek produktu:
-                        input(type='text', name='image')
-                        input(type='submit')
-            div.row.col-md-12.data-input
+  script(src='../javascripts/admin.js')    

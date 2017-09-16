@@ -9,7 +9,6 @@ var bodyParser = require('body-parser');
 var passport = require('passport');
 
 var index = require('./routes/index');
-var users = require('./routes/users');
 
 var app = express();
 
@@ -40,7 +39,12 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
-app.use('/users', users);
+app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js')); // redirect bootstrap JS
+app.use('/js', express.static(__dirname + '/node_modules/jquery/dist')); // redirect JS jQuery
+app.use('/js', express.static(__dirname + '/node_modules/angular/'));
+app.use('/js', express.static(__dirname + '/node_modules/angular-ui-bootstrap/dist/'));
+app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css')); // redirect CSS bootstrap
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

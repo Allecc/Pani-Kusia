@@ -4,12 +4,58 @@ const passport = require('passport');
 const Strategy = require('passport-local').Strategy;
 const nodemailer = require('nodemailer');
 
-var Sequelize = require('sequelize');
-var sequelize = new Sequelize('appbase', 'root', '', {
+const Sequelize = require('sequelize');
+const sequelize = new Sequelize('panikusia', 'root', '', {
   dialect: 'mysql',
   host: 'localhost', // nazwa hosta
-  port: 3306 // numer portu
+  port: 3306
 });
+
+const User = sequelize.define('User', {
+  username: Sequelize.STRING,
+  password: Sequelize.STRING
+});
+
+const Details = sequelize.define('Details', {
+  name: Sequelize.STRING,
+  forname: Sequelize.STRING,
+  street: Sequelize.STRING,
+  post: Sequelize.STRING,
+  city: Sequelize.STRING,
+  phone: Sequelize.STRING,
+  additional: Sequelize.TEXT
+});
+
+const Category = sequelize.define('Category',{
+  name: Sequelize.STRING
+});
+
+const Product = sequelize.define('Product', {
+  title: Sequelize.STRING,
+  description: Sequelize.TEXT,
+  price: Sequelize.FLOAT,
+  image: Sequelize.STRING,
+  storage: Sequelize.INTEGER
+});
+
+const About = sequelize.define('About', {
+  title: Sequelize.STRING,
+  content: Sequelize.TEXT
+})
+sequelize.sync(); //  force sync - if tables doesnt exist sequelize will create them
+Product.belongsTo(Category); // products have their categories
+Product.belongsToMany(User, {through: 'userProducts'}); // user can have many products in basket
+
+/* Test database connection */
+sequelize
+  .authenticate()
+  .then(() => {
+    console.log('Connected to the database!');
+  })
+  .catch(err => {
+    console.log('Unable to connect to the database!')
+  });
+/* End database test */
 
 // create reusable transporter object using the default SMTP transport
 let transporter = nodemailer.createTransport({
@@ -18,46 +64,90 @@ let transporter = nodemailer.createTransport({
     secure: true, // secure:true for port 465, secure:false for port 587
     auth: {
         user: 'allecx@allecx.ct8.pl',
-        pass: 'Siajek1995'
+        pass: 'wrwarawr'
     }
-});
-
-var title = 'Pani Kusia';
-
-var Product = sequelize.define('Product', {
-  title: Sequelize.STRING,
-  description: Sequelize.TEXT,
-  price: Sequelize.FLOAT,
-  image: Sequelize.STRING,
-  show: Sequelize.BOOLEAN
-});
-
-var User = sequelize.define('User', {
-  username: Sequelize.STRING,
-  password: Sequelize.STRING
 });
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  res.render('index', {
-    title: title
+  res.render('index');
+});
+
+/* About endpoints */
+// Return about infromation
+router.get('/get/about', function(req, res){
+});
+/* End about endpoints */
+
+/* Categories endpoints */
+// Return all categories
+router.get('/get/categories', function(req, res){
+  Category.findAll()
+  .then( category => {
+    res.json(category);
   });
 });
 
-router.get('/home')
+// add category
+router.post('/add/category', function(req, res){
+  console.log(req.body)
+  Category
+    .build(
+      req.body
+    )
+    .save()
+    .then(function(returnSaved) {})
+    .catch(function(error) {});
 
-router.get('/home', function(req, res) {
-  res.redirect('/');
+    res.status(200).end();
 });
-router.get('/products', function(req, res) {
-  res.redirect('/#products');
+/* End categories endpoints */
+
+/* Product endpoints */
+// Get all products
+router.get('/get/products', function(req, res){
+  Product.findAll()
+  .then( product => {
+    res.json(product);
+  });
 });
-router.get('/about', function(req, res) {
-  res.redirect('/#about');
+
+// add product
+router.post('/add/product', function(req, res){
+  console.log(req.body)
+  Product
+    .build(
+      req.body
+    )
+    .save()
+    .then(function(returnSaved) {})
+    .catch(function(error) {});
+
+    res.status(200).end();
 });
-router.get('/contact', function(req, res) {
-  res.redirect('/#contact');
+/* End product endpoints */
+
+/* User endpoints */
+router.get('/get/users', function(req, res){
+  User.findAll()
+  .then( user => {
+    res.json(user);
+  });
 });
+/* End user endpoints */
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* Get information from database */
 router.get('/load', function(req, res) {
@@ -260,9 +350,7 @@ router.post('/login',
 
 /* Admin page */
 router.get('/admin', function(req, res) {
-  res.render('admin', {
-    user: req.user
-  });
+  res.render('admin', {});
 });
 
 module.exports = router;
