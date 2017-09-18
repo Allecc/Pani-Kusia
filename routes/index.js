@@ -23,6 +23,7 @@ const Details = sequelize.define('Details', {
   post: Sequelize.STRING,
   city: Sequelize.STRING,
   phone: Sequelize.STRING,
+  mail: Sequelize.STRING,
   additional: Sequelize.TEXT
 });
 
@@ -41,7 +42,17 @@ const Product = sequelize.define('Product', {
 const About = sequelize.define('About', {
   title: Sequelize.STRING,
   content: Sequelize.TEXT
-})
+});
+
+const Contact = sequelize.define('Contact',{
+  street: Sequelize.STRING,
+  post: Sequelize.STRING,
+  telephone: Sequelize.STRING, // user can do whather he wants (123 456 789, 123456789, +48 12 23 45 6789, string can store all)
+  mail: Sequelize.STRING,
+  targetMail: Sequelize.STRING
+});
+
+
 sequelize.sync(); //  force sync - if tables doesnt exist sequelize will create them
 Details.belongsTo(User); // user can have their information
 Product.belongsTo(Category); // products have their categories
@@ -69,10 +80,43 @@ let transporter = nodemailer.createTransport({
     }
 });
 
+/* Select contact field */
+let contact;
+ Contact.findById(1)
+ .then( cont => {
+   contact = cont;
+ });
+/* End select contact */
+
 /* GET home page. */
 router.get('/', function(req, res) {
   res.render('index');
 });
+
+router.get('/register', function(req, res){
+  res.render('register');
+});
+
+
+/* User endpoints */
+/* Get register page */
+router.get('/get/users', function(req, res){
+  User.findAll()
+  .then( user => {
+    res.json(user);
+  });
+});
+
+router.post('/add/user', function(req, res){
+    User
+    .build(req.body)
+    .save()
+    .then(function(returnSaved) {})
+    .catch(function(error) {});
+
+    res.status(200).end();
+});
+/* End user endpoints */
 
 /* About endpoints */
 // Return about infromation
@@ -92,6 +136,18 @@ router.put('/edit/about', function(req, res){
   res.status(200).end();
 })
 /* End about endpoints */
+
+/* contact endpoints */
+// Return contact infromation
+router.get('/get/contact', function(req, res){
+  res.json(contact);
+});
+
+router.put('/edit/contact', function(req, res){
+  contact.update(req.body);
+  res.status(200).end();
+})
+/* End contact endpoints */
 
 /* Categories endpoints */
 // Return all categories
@@ -140,15 +196,6 @@ router.post('/add/product', function(req, res){
     res.status(200).end();
 });
 /* End product endpoints */
-
-/* User endpoints */
-router.get('/get/users', function(req, res){
-  User.findAll()
-  .then( user => {
-    res.json(user);
-  });
-});
-/* End user endpoints */
 
 
 
@@ -226,7 +273,7 @@ router.post('/send', function(req, res){
   // setup email data with unicode symbols
   var mailOptions = {
       from: req.body.name + ' ' + req.body.email, // sender address
-      to: 'allecx@allecx.ct8.pl', // list of receivers
+      to: contact.targetMail, // list of receivers
       subject: req.body.emailTitle, // Subject line
       text: req.body.message, // plain text body
       html: req.body.message, // html body
@@ -238,7 +285,7 @@ router.post('/send', function(req, res){
           return console.log(error);
       }
       console.log('Message %s sent: %s', info.messageId, info.response);
-  })
+  });
   res.redirect('/#contact');
 });
 
@@ -353,13 +400,10 @@ passport.deserializeUser(function(id, cb) {
 
 router.post('/login',
   passport.authenticate('local', {
-    failureRedirect: '/admin'
+    failureRedirect: './'
   }),
   function(req, res) {
-    console.log('rage');
-    res.render('admin', {
-      user: req.user
-    });
+    res.render('./', { user: req.user });
   });
 
 /* Admin page */

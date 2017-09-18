@@ -16,6 +16,7 @@ html(lang="pl")
     script(type='text/javascript', src='/js/ui-bootstrap-tpls.js')
       
     link(rel='stylesheet', href='/css/bootstrap.min.css')
+    link(rel="stylesheet" href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css')
     link(rel='stylesheet', href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css')
     link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Comfortaa")
     link(rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato")
@@ -26,23 +27,29 @@ html(lang="pl")
       #myNavbar.menu-btn-group
         a.menu-btn.w3-hover-black.w3-hide-medium.w3-hide-large.w3-right(href='javascript:void(0);', onclick='toggleFunction()', title='Toggle Navigation Menu')
           i.fa.fa-bars
-        a.menu-btn.menu-btn(href='#') HOME
-        a.menu-btn.w3-hide-small(href='#about')
+        a.menu-btn.menu-btn(href='./#') HOME
+        a.menu-btn.w3-hide-small(href='./#about')
           i.fa.fa-user
           |  O SKLEPIE
-        a.menu-btn.w3-hide-small(href='#products')
+        a.menu-btn.w3-hide-small(href='./#products')
           i.fa.fa-th-large
           |  PRODUKTY
-        a.menu-btn.w3-hide-small(href='#contact')
+        a.menu-btn.w3-hide-small(href='./#contact')
           i.fa.fa-envelope
           |  KONTAKT
-        a.menu-btn.w3-hide-small.go-right(href='#')
+        a.menu-btn.w3-hide-small.go-right(href='./#')
           i.fa.fa-search
+        // Admin dont have a basket    
+        if !user
+          a.menu.btn.w3-hide-small.go-right(data-toggle='modal' data-target='#basketModal')
+            i.fa.fa-shopping-basket
+            |  KOSZYK
       // Navbar on small screens
       #navDemo.w3-bar-block.w3-white.w3-hide.w3-hide-large.w3-hide-medium
-        a.menu-btn(href='#about', onclick='toggleFunction()') O SKLEPIE
-        a.menu-btn(href='#products', onclick='toggleFunction()') PRODUKTY
-        a.menu-btn(href='#contact', onclick='toggleFunction()') KONTAKT
-        a.menu-btn(href='#') SEARCH
+        a.menu-btn(href='./#about', onclick='toggleFunction()') O SKLEPIE
+        a.menu-btn(href='./#products', onclick='toggleFunction()') PRODUKTY
+        a.menu-btn(href='./#contact', onclick='toggleFunction()') KONTAKT
+        a.menu-btn(href='./register', onclick='toggleFunction()') REJESTRACJA
+        a.menu-btn(href='./#') SEARCH
   body.container-fluid(ng-app='paniKusia' ng-controller='kusiaCtrl')
     block content

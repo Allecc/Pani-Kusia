@@ -22,6 +22,26 @@ angular
         }
       });
 
+      $scope.contact = {
+        street: '',
+        post: '',
+        telephone: '',
+        mail: '',
+        targetMail: ''
+      }
+
+      // get contact
+      $http.get('/get/contact')
+        .then( res => {
+          $scope.contact = {
+            street: res.data.street,
+            post: res.data.post,
+            telephone: res.data.telephone,
+            mail: res.data.mail,
+            targetMail: res.data.targetMail
+          }
+        });
+        
     // Loading categories
     $http.get('/get/categories')
       .then( res => {

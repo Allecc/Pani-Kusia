@@ -1,20 +1,107 @@
 extends layout
 block content
-  .row(style='margin-top: 5%' ng-app='adminKusia' ng-controller='kusiaCtrl')
-    ul.col-md-2
+  mixin modalAddProduct
+    #modalAddProduct.modal.fade(role='dialog', ng-if='tab.products')
+      .modal-dialog.modal-lg
+        // Modal content
+        .modal-content
+          .modal-title
+            h2 Dodaj produkt
+          form.modal-body              
+            .form-group
+              label Nazwa: 
+              input.form-control(type='text', ng-model='newProduct.title')
+            .form-group
+              label Opis: 
+              textarea.form-control(rows='2', ng-model='newProduct.description')   
+            .form-group
+              label Cena: 
+              input.form-control(type='text', ng-model='newProduct.price')   
+            .form-group
+              label Zdjęcie: 
+              input.form-control(type='text', ng-model='newProduct.image') 
+            .form-group
+              label Kategoria:
+              ol
+                li(ng-repeat='category in categories')
+                  input(type='radio', name='kategoria', ng-model='newProduct.CategoryId', value='{{category.id}}') 
+                  span  {{category.name}}  
+            pre.form-group {{newProduct}}              
+          .modal-footer
+            button.btn.btn-success(type='button', ng-click='addProduct()') Zapisz
+            button.btn.btn-danger(type='button', data-dismiss='modal') Zamknij
+  mixin modalAddCategory
+    #modalAddCategory.modal.fade(role='dialog', ng-if='tab.products')
+      .modal-dialog.modal-sm
+        // Modal content
+        .modal-content
+          .modal-title
+            h2 Dodaj kategorię
+          form.modal-body              
+            .form-group
+              label Nazwa: 
+              input.form-control(type='text', ng-model='newCategory.name')
+            pre.form-group {{newCategory}}              
+          .modal-footer
+            button.btn.btn-success(type='button', ng-click='addCategory()') Zapisz
+            button.btn.btn-danger(type='button', data-dismiss='modal') Zamknij  
+  mixin modalEditAbout
+    #modalEditAbout.modal.fade(role='dialog', ng-if='tab.about')
+      .modal-dialog.modal-lg
+        // Modal content
+        .modal-content
+          .modal-title
+            h2 Edytuj 'About'
+          form.modal-body              
+            .form-group
+              label Tytuł: 
+              input.form-control(type='text', ng-model='about.title' ng-value='about.title')              
+            .form-group
+              label Informacje: 
+              textarea.form-control(rows='3', ng-model='about.content' ng-value='about.content')  
+            pre.form-group {{about}}              
+          .modal-footer
+            button.btn.btn-success(type='button', ng-click='editAbout()') Zapisz
+            button.btn.btn-danger(type='button', data-dismiss='modal') Zamknij  
+  mixin modalEditContact
+    #modalEditContact.modal.fade(role='dialog', ng-if='tab.contact')
+      .modal-dialog.modal-lg
+        // Modal content
+        .modal-content
+          .modal-title
+            h2 Edytuj 'Kontakt'
+          form.modal-body              
+            .form-group
+              label Ulica: 
+              input.form-control(type='text', ng-model='contact.street' ng-value='contact.street')              
+            .form-group
+              label Poczta/miasto: 
+              input.form-control(type='text', ng-model='contact.post' ng-value='contact.post')              
+            .form-group
+              label Telefon: 
+              input.form-control(type='text', ng-model='contact.telephone' ng-value='contact.telephone')                 
+            .form-group
+              label E-mail: 
+              input.form-control(type='text', ng-model='contact.mail' ng-value='contact.mail') 
+            pre.form-group {{contact}}              
+          .modal-footer
+            button.btn.btn-success(type='button', ng-click='editContact()') Zapisz
+            button.btn.btn-danger(type='button', data-dismiss='modal') Zamknij  
+  .row(style='margin-top: 5%')
+    ul.col-md-2.nav
       li.btn.btn-default.col-md-12(ng-click='informationTab()') Dashboard
       li.btn.btn-default.col-md-12(ng-click='userTab()') Użytkownicy
       li.btn.btn-default.col-md-12(ng-click='productsTab()') Produkty
       li.btn.btn-default.col-md-12(ng-click='aboutTab()') O Mnie
-      li.btn.btn-default.col-md-12 Kontakt
+      li.btn.btn-default.col-md-12(ng-click='contactTab()') Kontakt
     .col-md-10
       .row
-        .col-md-12(ng-show='tab.dashboard')
+        .col-md-12(ng-if='tab.dashboard')
           h1.center Jakiś tekst informacyjny
         .col-md-12(ng-if='tab.users')
           ul
             li(repeat='user in users') {{user}}
-        .col-md-12(ng-show='tab.products')
+        .col-md-12(ng-if='tab.products')
           .row
             .col-md-12 
               h3 Produkty
@@ -37,7 +124,7 @@ block content
                       p {{product.image}}
                       .row
                         strong.col-md-6 Cena: {{product.price}}
-                        strong.col-md-6 Kategoria: {{product.CategoryId}}
+                        strong.col-md-6(ng-if='product.CategoryId != NULL') Kategoria: {{product.CategoryId}}
               .row
                 .col-md-12
                   h3 Bez kategorii
@@ -51,73 +138,26 @@ block content
                       .row
                         strong.col-md-6 Cena: {{product.price}}
                         strong.col-md-6 Kategoria: {{product.CategoryId}}
-        .col-md-12(ng-show='tab.about')
+        .col-md-12(ng-if='tab.about')
           button.btn.btn-default(data-toggle="modal" data-target="#modalEditAbout") Edytuj
-          h2 {{about.title}}
-          p {{about.content}}
-      // Modals here  
-      #modalAddProduct.modal.fade(role='dialog')
-        .modal-dialog.modal-lg
-          // Modal content
-          .modal-content
-            .modal-title
-              h2 Dodaj produkt
-            form.modal-body              
-              .form-group
-                label Nazwa: 
-                input.form-control(type='text', ng-model='newProduct.title')
-              .form-group
-                label Opis: 
-                textarea.form-control(rows='2', ng-model='newProduct.description')   
-              .form-group
-                label Cena: 
-                input.form-control(type='text', ng-model='newProduct.price')   
-              .form-group
-                label Zdjęcie: 
-                input.form-control(type='text', ng-model='newProduct.image') 
-              .form-group
-                label Kategoria:
-                ol
-                  li(ng-repeat='category in categories')
-                    input(type='radio', name='kategoria', ng-model='newProduct.CategoryId', value='{{category.id}}') 
-                    span  {{category.name}}  
-              pre.form-group {{newProduct}}              
-            .modal-footer
-              button.btn.btn-success(type='button', ng-click='addProduct()') Zapisz
-              button.btn.btn-warning(type='reset') Wyczysc
-              button.btn.btn-danger(type='button', data-dismiss='modal') Zamknij
-      #modalAddCategory.modal.fade(role='dialog')
-        .modal-dialog.modal-sm
-          // Modal content
-          .modal-content
-            .modal-title
-              h2 Dodaj kategorię
-            form.modal-body              
-              .form-group
-                label Nazwa: 
-                input.form-control(type='text', ng-model='newCategory.name')
-              pre.form-group {{newCategory}}              
-            .modal-footer
-              button.btn.btn-success(type='button', ng-click='addCategory()') Zapisz
-              button.btn.btn-warning(type='reset') Wyczysc
-              button.btn.btn-danger(type='button', data-dismiss='modal') Zamknij  
-      #modalEditAbout.modal.fade(role='dialog')
-        .modal-dialog.modal-lg
-          // Modal content
-          .modal-content
-            .modal-title
-              h2 Edytuj 'About'
-            form.modal-body              
-              .form-group
-                label Tytuł: 
-                input.form-control(type='text', ng-model='about.title' ng-value='about.title')              
-              .form-group
-                label Informacje: 
-                textarea.form-control(rows='3', ng-model='about.content' ng-value='about.content')  
-              pre.form-group {{about}}              
-            .modal-footer
-              button.btn.btn-success(type='button', ng-click='editAbout()') Zapisz
-              button.btn.btn-warning(type='reset') Wyczysc
-              button.btn.btn-danger(type='button', data-dismiss='modal') Zamknij  
+          .col-md-12
+            h2 {{about.title}}
+            p {{about.content}}
+        .col-md-12(ng-if='tab.contact')
+          button.btn.btn-default(data-toggle="modal" data-target="#modalEditContact") Edytuj    		
+          .col-md-12
+            span {{contact.street}}
+            br 
+            span {{contact.post}}
+            .contacts
+              i.fa.fa-phone-square.fa-lg(aria-hidden='true')
+                span  {{contact.telephone}}
+              br
+              i.fa.fa-envelope.fa-lg(aria-hidden='true')
+                span  {{contact.mail}}
+  +modalAddProduct
+  +modalAddCategory
+  +modalEditAbout
+  +modalEditContact
 
   script(src='../javascripts/admin.js')    

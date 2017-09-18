@@ -1,0 +1,49 @@
+extends layout
+block content
+  .row
+    .col-md-6.col-md-offset-3(style="margin-top: 10%")
+      form(ng-if='basic')
+        .form-group
+          label Nazwa użytkownika
+          input.form-control(type="text" name="" id="" ng-model='user.name')
+          div(id='wrongName' style='color:red')  
+            label(ng-if='wrongName') Niepoprawna nazwa użytkownika!
+          label Hasło
+          input.form-control(type="password" name="" id="" ng-model='user.password')
+          label Powtórz hasło
+          input.form-control(type="password" name="" id="" ng-model='user.repeatPassword')
+          div(id='wrongRepeat' style='color:red')
+            label(ng-if='wrongRepeat') Hasła muszą być identyczne!
+        .form-group
+          button.btn.btn-success.go-right(ng-click='register()')
+            | Zarejestruj  
+            i.fa.fa-plus-square(aria-hidden='true')
+      form(ng-if='!basic')
+        .form-group
+          label Imię Nazwisko
+          input.form-control(type="text" name="" id="" placeholder="Jan")
+          input.form-control(type="text" name="" id="" placeholder="Kowalski")
+        .form-group
+          label Adres
+          input.form-control(type="text" name="" id="" placeholder="Czerwone Maki 1/5")
+          input.form-control(type="text" name="" id="" placeholder="30-348 Kraków")
+        .form-group
+          label Dane kontaktowe
+          input.form-control(type='text' name="" id="", placeholder="123 456 789")
+          input.form-control(type='text' name="" id="", placeholder="kowalski@panikusia.pl")
+        .form-group
+          label Dodatkowe Informacje
+          textarea.form-control(rows='2' placeholder="Dodatkowe informacje do wysyłki...")
+        .form-group
+          label.col-md-12(for='checkbox_1')
+            input(type='checkbox' name="" id="checkbox_1")
+            |  Wyrażam zgodę na przetwarzanie moich danych osobowych zgodnie z ustawą o ochronie danych osobowych w związku z realizacją zamówienia prze PaniKusia.pl z siedzibą w domu.
+          label.col-md-12(for='checkbox_2')
+            input(type='checkbox' name="" id="checkbox_2")
+            |  Wyrażam zgodę na otrzymywanie wiadomości drogą mailową od Kusi.
+        .form-group
+          button.btn.btn-success.go-right(ng-click='register()')
+            | Zarejestruj  
+            i.fa.fa-plus-square(aria-hidden='true')
+
+  script(src='/javascripts/register.js')

@@ -6,7 +6,8 @@ angular
       dashboard: true,
       products: false,
       users: false,
-      about: false
+      about: false,
+      contact: false
     };
 
     $scope.informationTab = function (){
@@ -14,6 +15,7 @@ angular
       $scope.tab.products = false;
       $scope.tab.users = false;
       $scope.tab.about = false;
+      $scope.tab.contact = false;
     }
 
     $scope.productsTab = function (){
@@ -28,6 +30,7 @@ angular
       $scope.tab.products = false;
       $scope.tab.users = true;
       $scope.tab.about = false;
+      $scope.tab.contact = false;
     }
 
     $scope.aboutTab = function(){
@@ -35,6 +38,15 @@ angular
       $scope.tab.products = false;
       $scope.tab.users = false;
       $scope.tab.about = true;
+      $scope.tab.contact = false;
+    }
+
+    $scope.contactTab = function(){
+      $scope.tab.dashboard = false;
+      $scope.tab.products = false;
+      $scope.tab.users = false;
+      $scope.tab.about = false;
+      $scope.tab.contact = true;
     }
     /* Section displayed */
 
@@ -77,6 +89,26 @@ angular
         }
       });
 
+    $scope.contact = {
+      street: '',
+      post: '',
+      telephone: '',
+      mail: '',
+      targetMail: ''
+    }
+
+    // get contact
+    $http.get('/get/contact')
+      .then( res => {
+        $scope.contact = {
+          street: res.data.street,
+          post: res.data.post,
+          telephone: res.data.telephone,
+          mail: res.data.mail,
+          targetMail: res.data.targetMail
+        }
+      });
+
     $scope.addProduct = function (){
       console.log($scope.newProduct);
       $http.post('/add/product', $scope.newProduct)
@@ -100,6 +132,15 @@ angular
       }
 
       $http.put('/edit/about', about)
+        .then(function (){
+          location.reload();
+        });
+    }
+
+    $scope.editContact = function (){
+      let contact = $scope.contact;
+
+      $http.put('/edit/contact', contact)
         .then(function (){
           location.reload();
         });

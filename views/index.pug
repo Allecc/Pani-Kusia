@@ -43,16 +43,15 @@ block content
 	.row.textContainers
 		.container
 			.go-left.address-text.col-sm-6
-				div
-					| ul. Czerwone Maki 80
-					br
-					| 30-392 Kraków
+				div {{contact.street}}
+					br 
+					span  {{contact.post}}
 					.contacts
 						i.fa.fa-phone-square.fa-lg(aria-hidden='true')
-						|  123 456 789
+						span  {{contact.telephone}}
 						br
 						i.fa.fa-envelope.fa-lg(aria-hidden='true')
-						|  kontakt@PaniKusia.pl
+						span  {{contact.mail}}
 				h2 Napisz do nas:
 					form#contact-form.contact-form(action='/send', method='post')
 						.row
@@ -91,6 +90,19 @@ block content
 				i.fa.fa-facebook-official.fa-lg
 			a.btn(href="http://", target="_blank")
 				i.fa.fa-instagram.fa-lg
+					
+	#basketModal.modal.fade(role='dialog')
+		.modal-dialog.modal-lg
+			// Modal content
+			.modal-content
+				.modal-title
+					h2  Koszyk
+				form.modal-body              
+					.form-group
+						label Koszyk jest pusty ;}
+				.modal-footer
+					button.btn.btn-success Zapisz
+					button.btn.btn-danger Zamknij  				
 
 	// Products control script
 	script(src='/javascripts/products.js')
