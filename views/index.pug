@@ -30,7 +30,7 @@ block content
 									a.products-links(href = 'product/{{product.id}}') Więcej 
 										i.fa.fa-angle-double-right.fa-lg(aria-hidden='true')
 								span.go-right
-									a.products-links(href='/backet-add/{{product.id}}')
+									a.products-links(ng-click='addToCart(product.id)')
 										i.fa.fa-shopping-cart.fa-lg(aria-hidden='true')
 										|  Cena {{product.price | currency: '': 2}}
 

@@ -41,12 +41,17 @@ angular
             targetMail: res.data.targetMail
           }
         });
-        
+
     // Loading categories
-    $http.get('/get/categories')
+    $http.get('/get/products')
       .then( res => {
         $scope.categories = res.data;
       });
 
-    // Loading contact
+    $scope.addToCart = function( id ){
+      $http.post('/add/cart', {id: id})
+      .then( () => {
+        console.log('Added: ' + id);
+      });
+    }
   });

@@ -11,6 +11,7 @@ const sequelize = new Sequelize('kusia', 'root', '', {
   port: 3306
 });
 
+const Cart = require('../models/cart');
 const User = sequelize.define('User', {
   username: Sequelize.STRING,
   password: Sequelize.STRING
@@ -184,7 +185,6 @@ router.get('/get/products', function(req, res){
 
 // add product
 router.post('/add/product', function(req, res){
-  console.log(req.body)
   Product
     .build(
       req.body
@@ -197,7 +197,24 @@ router.post('/add/product', function(req, res){
 });
 /* End product endpoints */
 
+/* Cart endpoints */
+router.post('/add/cart', function(req, res){
+  let productId = req.body.id;
+  let cart = new Cart(req.session.cart ? req.session.cart : {items: {}, totalQty: 0, totalPrice: 0});
 
+  Product.findById(productId)
+  .then( product => {
+    cart.add(product, product.id);
+    req.session.cart = cart;
+    res.status(200).end();
+  });
+});
+
+// get cart
+router.get('/get/cart', function(req, res){
+  res.json(req.session.cart);
+});
+/* End cart endpoints */
 
 
 
