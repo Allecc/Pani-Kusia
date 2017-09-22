@@ -65,3 +65,11 @@ background-color: #757575;
 #bottomIcons {
   padding: 0!important;
 }
+
+ul {
+  list-style-type: none;
+}
+
+.modal-content {
+  padding: 15px;
+}

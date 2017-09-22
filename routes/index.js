@@ -214,6 +214,15 @@ router.post('/add/cart', function(req, res){
 router.get('/get/cart', function(req, res){
   res.json(req.session.cart);
 });
+
+router.post('/delete/cart', function(req, res){
+  let productId = req.body.id;
+  console.log('To remove: ' + productId);
+  var cart = new Cart(req.session.cart ? req.session.cart : {items: {}, totalQty: 0, totalPrice: 0});
+  cart.remove(productId);
+  req.session.cart = cart;
+  res.status(200).end();
+})
 /* End cart endpoints */
 
 

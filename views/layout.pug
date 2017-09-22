@@ -43,7 +43,8 @@ html(lang="pl")
         if !user
           a.menu.btn.w3-hide-small.go-right(data-toggle='modal' data-target='#basketModal')
             i.fa.fa-shopping-basket
-            |  KOSZYK
+            |  KOSZYK 
+            span.badge.badge-info(ng-if='cart.totalQty > 0') {{ cart.totalQty }}
       // Navbar on small screens
       #navDemo.w3-bar-block.w3-white.w3-hide.w3-hide-large.w3-hide-medium
         a.menu-btn(href='./#about', onclick='toggleFunction()') O SKLEPIE

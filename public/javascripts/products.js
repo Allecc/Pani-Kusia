@@ -15,7 +15,6 @@ angular
     // get about
     $http.get('/get/about')
       .then( res => {
-        console.log(res.data[0]);
         $scope.about = {
           title: res.data[0].title,
           content: res.data[0].content
@@ -47,11 +46,49 @@ angular
       .then( res => {
         $scope.categories = res.data;
       });
-
+    /* Cart section */
     $scope.addToCart = function( id ){
       $http.post('/add/cart', {id: id})
       .then( () => {
         console.log('Added: ' + id);
+        getCart();
       });
     }
+
+    $().ready(function(){
+      getCart();
+    });
+
+    function calculateLiHeight(){
+      let rowsNumber = 0;
+      $().ready(function(){
+        $('#modalCartBody li').each(function(){
+          rowsNumber++;
+        });
+
+        $('#modalCartBody').height(rowsNumber * 20); // calculate height of the products in cart
+      });
+    }
+
+    /* get cart */
+    function getCart(){
+      $http.get('/get/cart')
+      .then( cart => {
+        console.log(cart.data);
+        $scope.cart = cart.data;
+        calculateLiHeight();
+      });
+    }
+
+
+
+    $scope.deleteFromCart = function(id){
+      console.log('To delete: ' + id);
+      $http.post('/delete/cart',  {id: id})
+        .then( () => {
+          getCart();
+        });
+    }
+
+    /* End cart */
   });

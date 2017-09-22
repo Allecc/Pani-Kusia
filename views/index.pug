@@ -90,19 +90,49 @@ block content
 				i.fa.fa-facebook-official.fa-lg
 			a.btn(href="http://", target="_blank")
 				i.fa.fa-instagram.fa-lg
-					
+	
+	// Basket modal				
 	#basketModal.modal.fade(role='dialog')
 		.modal-dialog.modal-lg
 			// Modal content
 			.modal-content
 				.modal-title
 					h2  Koszyk
-				form.modal-body              
-					.form-group
-						label Koszyk jest pusty ;}
+				form#modalCartBody.modal-body     
+					.form-group(ng-if='cart.totalQty == 0')
+						ul.col-md-12
+							li.row.text-center Koszyk jest pusty
+					.form-group(ng-if='cart.totalQty > 0')
+						ul.col-md-12
+							li.row
+								span.col-md-3
+									strong Produkt
+								span.col-md-3
+									strong Sztuk
+								span.col-md-3
+									strong Cena za sztukę
+								span.col-md-2
+									strong Cena
+								span.col-md-1
+							li.row(ng-repeat='item in cart.items')
+								span.col-md-3
+									strong {{ item.item.title }}
+								span.col-md-3 {{ item.qty }}
+								span.col-md-3 {{ item.item.price }}
+								span.col-md-2 {{ item.price }}
+								span.col-md-1
+									a(href='' ng-click='deleteFromCart(item.item.id)')
+										i.fa.fa-times
+							li.row
+								span.col-md-offset-6.col-md-3
+									strong Ilośc: 
+									span {{ cart.totalQty }}
+								span.col-md-3
+										strong Suma: 
+										span {{ cart.totalPrice }}
 				.modal-footer
-					button.btn.btn-success Zapisz
-					button.btn.btn-danger Zamknij  				
+					button.btn.btn-success(ng-disabled='cart.totalQty == 0') Zamówienie
+					button.btn.btn-danger(data-dismiss='modal') Zamknij  				
 
 	// Products control script
 	script(src='/javascripts/products.js')

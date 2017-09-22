@@ -9,7 +9,7 @@ function myFunction() {
     } else {
         navbar.className = navbar.className.replace(" w3-card-2 w3-animate-top w3-white", "");
     }
-}
+};
 
 // Used to toggle the menu on small screens when clicking on the menu button
 function toggleFunction() {
@@ -19,4 +19,4 @@ function toggleFunction() {
     } else {
         x.className = x.className.replace(" w3-show", "");
     }
-}
+};

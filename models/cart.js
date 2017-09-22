@@ -12,15 +12,31 @@ module.exports = function Cart(oldCart) {
 
     storedItem.qty++;
     storedItem.price = storedItem.item.price * storedItem.qty;
+    storedItem.price = Number((storedItem.item.price).toFixed(2));
     this.totalQty++;
-    this.totalPrice += storedItem.price;
+    this.totalPrice += storedItem.item.price;
+    this.totalPrice = Number((this.totalPrice).toFixed(2));
   };
 
-  this.generateArray = function(){
-    let arr = [];
-    for (let id in this.items){
-      arr.push(this.items[id]);
+  this.remove = function ( id ){
+    let storedItem = this.items[id];
+    if(storedItem){
+      storedItem.qty--;
+      if(storedItem.qty != 0){
+        storedItem.price = storedItem.item.price * storedItem.qty;
+        storedItem.price = Number((storedItem.item.price).toFixed(2));
+      }
+
+      this.totalQty--;
+      this.totalPrice -= storedItem.item.price;
+      this.totalPrice = Number((this.totalPrice).toFixed(2));
+
+      //console.log('New stored item: ' store)
+
+        console.log('total post: ' + this.totalPrice + ' ' + this.totalQty);
+      if(storedItem.qty == 0){
+        delete this.items[id];
+      }
     }
-    return arr;
-  };
+  }
 };
