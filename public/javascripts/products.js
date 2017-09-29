@@ -42,11 +42,29 @@ angular
         });
 
     // Loading categories
-    $http.get('/get/products')
+    $http.get('/get/categories')
       .then( res => {
         $scope.categories = res.data;
       });
-    /* Cart section */
+
+    // Show products in CategoryId
+    $scope.showProducts = false;
+    let lastCategory = -1;
+    $scope.displayProduct = function(id){
+      $scope.showProducts = !$scope.showProducts;
+
+      if($scope.showProducts && lastCategory != id){
+        delete $scope.products;
+
+        $http.get('/get/products/' + id)
+        .then( res => {
+            $scope.products = res.data;
+            lastCategory = id;
+        });
+      }
+    };
+
+    /*----------- Cart section ---------*/
     $scope.addToCart = function( id ){
       $http.post('/add/cart', {id: id})
       .then( () => {
@@ -74,13 +92,10 @@ angular
     function getCart(){
       $http.get('/get/cart')
       .then( cart => {
-        console.log(cart.data);
         $scope.cart = cart.data;
         calculateLiHeight();
       });
     }
-
-
 
     $scope.deleteFromCart = function(id){
       console.log('To delete: ' + id);
@@ -89,6 +104,5 @@ angular
           getCart();
         });
     }
-
-    /* End cart */
-  });
+    /*----------- End cart section ---------*/
+});

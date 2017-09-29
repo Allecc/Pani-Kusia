@@ -6,6 +6,10 @@ html, body {
   font-family: Comfortaa, cursive!important;
 }
 
+body.modal-open {
+    overflow: visible;
+}
+
 .go-right {
   float: right!important;
 }

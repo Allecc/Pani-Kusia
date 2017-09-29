@@ -40,7 +40,10 @@ block content
           form.modal-body              
             .form-group
               label Nazwa: 
-              input.form-control(type='text', ng-model='newCategory.name')
+              input.form-control(type='text', ng-model='newCategory.name')              
+            .form-group
+              label Zdjęcie: 
+              input.form-control(type='text', ng-model='newCategory.image')
             pre.form-group {{newCategory}}              
           .modal-footer
             button.btn.btn-success(type='button', ng-click='addCategory()') Zapisz

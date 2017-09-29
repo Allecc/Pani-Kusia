@@ -17,21 +17,21 @@
 /* Second image (Products) */
 .parallax2 {
   background-image: url("/images/parallax2.jpeg");
-  min-height: 300px;
+  min-height: 250px;
 }
 
 
 /* Third image (Kontakt) */
 .parallax3 {
   background-image: url("/images/parallax3.jpeg");
-  min-height: 300px;
+  min-height: 250px;
 }
 
 
 /* Forth image (Footer) */
 .parallax4 {
   background-image: url("/images/parallax4.jpeg");
-  min-height: 300px;
+  min-height: 250px;
 }
 
 .parallax-center {

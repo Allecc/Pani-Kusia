@@ -29,7 +29,8 @@ const Details = sequelize.define('Details', {
 });
 
 const Category = sequelize.define('Category',{
-  name: Sequelize.STRING
+  name: Sequelize.STRING,
+  image: Sequelize.STRING
 });
 
 const Product = sequelize.define('Product', {
@@ -183,6 +184,15 @@ router.get('/get/products', function(req, res){
   });
 });
 
+
+router.get('/get/products/:id', function(req, res){
+  let catId = req.params.id;
+  Product.findAll({ where: { CategoryId: catId }})
+  .then( product => {
+    res.json(product);
+  });
+});
+
 // add product
 router.post('/add/product', function(req, res){
   Product
@@ -204,7 +214,10 @@ router.post('/add/cart', function(req, res){
 
   Product.findById(productId)
   .then( product => {
-    cart.add(product, product.id);
+    if(product.storage -1 > 0) {
+      cart.add(product, product.id);
+    }
+
     req.session.cart = cart;
     res.status(200).end();
   });

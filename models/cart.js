@@ -31,9 +31,7 @@ module.exports = function Cart(oldCart) {
       this.totalPrice -= storedItem.item.price;
       this.totalPrice = Number((this.totalPrice).toFixed(2));
 
-      //console.log('New stored item: ' store)
 
-        console.log('total post: ' + this.totalPrice + ' ' + this.totalQty);
       if(storedItem.qty == 0){
         delete this.items[id];
       }

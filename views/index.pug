@@ -18,21 +18,39 @@ block content
 	// Products Section
 	.row
 		.col-sm-12.textContainers
-			.col-md-3.col-sm-6(ng-repeat='product in categories')
-				.productContainer
-					img(ng-src='/images/products/{{ product.image }}.jpeg' ng-mouseover='product.show = !product.show' ng-mouseleave='product.show = !product.show' alt='product{{product.id}}')
-					.overlay(ng-show='product.show' ng-mouseover='product.show = "true"' ng-mouseleave='product.show = !product.show')
+			#category.col-md-4.col-sm-6(ng-if='!showProducts' ng-repeat='category in categories')
+				a.productContainer(href='' ng-click='displayProduct(category.id); category.show = !category.show')
+					img(class='' ng-src='/images/{{ category.image }}' ng-mouseover='category.show = !category.show' ng-mouseleave='category.show = !category.show' alt='category{{category.id}}')
+					.overlay(ng-show='category.show' ng-mouseover='category.show = "true"' ng-mouseleave='category.show = !category.show')
 						.textOverly
-							h2 {{product.title}}
-							span {{ product.description }}
-							.product-price
-								span.go-left
-									a.products-links(href = 'product/{{product.id}}') Więcej 
-										i.fa.fa-angle-double-right.fa-lg(aria-hidden='true')
-								span.go-right
-									a.products-links(ng-click='addToCart(product.id)')
-										i.fa.fa-shopping-cart.fa-lg(aria-hidden='true')
-										|  Cena {{product.price | currency: '': 2}}
+							h2 {{category.name}}					
+			#product.col-sm-12(ng-if='showProducts')
+				.row 
+					.col-md-12 
+						h3
+							a(href='' ng-click='displayProduct(-1)')
+								i.fa.fa-angle-double-left.fa-lg(aria-hidden="true")
+								span  Kategorie
+				.row
+					.col-md-4.col-sm-6.productContainer(ng-repeat='product in products')
+						a
+							img(class='' ng-src='/images/products/{{ product.image }}.jpeg' ng-mouseover='product.show = !product.show' ng-mouseleave='product.show = !product.show' alt='product{{product.id}}')
+							.overlay(ng-show='product.show' ng-mouseover='product.show = "true"' ng-mouseleave='product.show = !product.show')
+								.textOverly
+									h2 {{product.title}}
+									span {{ product.description }}
+									.product-price
+										span(ng-if='product.storage > 0').col-md-6
+											i.fa.fa-archive
+											|  Ilośc {{product.storage}}
+										span.noProduct(ng-if='product.storage == 0').col-md-6
+											i.fa.fa-window-close
+											|  Brak produktu!
+										span.col-md-6
+											a.products-links(href='' ng-if='product.storage > 0' ng-click='addToCart(product.id)')
+												i.fa.fa-shopping-cart.fa-lg(aria-hidden='true')
+												|  Cena {{product.price | currency: '': 2}}
+
 
 	// Third Parallax ( CONTACT )
 	#contact.parallax.parallax3
