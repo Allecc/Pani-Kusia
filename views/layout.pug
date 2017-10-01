@@ -37,8 +37,6 @@ html(lang="pl")
         a.menu-btn.w3-hide-small(href='./#contact')
           i.fa.fa-envelope
           |  KONTAKT
-        a.menu-btn.w3-hide-small.go-right(href='./#')
-          i.fa.fa-search
         // Admin dont have a basket    
         if !user
           a.menu.btn.w3-hide-small.go-right(data-toggle='modal' data-target='#basketModal')
@@ -50,9 +48,7 @@ html(lang="pl")
         a.menu-btn(href='./#about', onclick='toggleFunction()') O SKLEPIE
         a.menu-btn(href='./#products', onclick='toggleFunction()') PRODUKTY
         a.menu-btn(href='./#contact', onclick='toggleFunction()') KONTAKT
-        a.menu-btn(href='./register', onclick='toggleFunction()') REJESTRACJA
         if !user
           a.menu-btn(data-toggle='modal' data-target='#basketModal')
-        a.menu-btn(href='./#') SEARCH
   body.container-fluid(ng-app='paniKusia' ng-controller='kusiaCtrl')
     block content

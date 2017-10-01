@@ -47,14 +47,47 @@ angular
         $scope.categories = res.data;
       });
 
+      // Set state on page pload
+      var stateObj = {
+        'categoryToShow': -1,
+        'displayProducts': false
+      };
+
+    //$().ready(function(){
+      if(!window.history.state){
+       window.history.pushState(stateObj, '', '');
+     }
+     console.log(window.history.state);
+    //});
+
     // Show products in CategoryId
-    $scope.showProducts = false;
-    let lastCategory = -1;
-    $scope.displayProduct = function(id){
+    let lastCategory = window.history.state.categoryToShow;
+    // display last selected category
+    if(lastCategory >= 0 && window.history.state.displayProducts){
+      $http.get('/get/products/' + lastCategory)
+      .then( res => {
+          $scope.products = res.data;
+      });
+      $scope.showProducts = true;
+      stateObj.displayProducts = true;
+
+      window.history.replaceState(stateObj, '', '');
+    } else {
+      $scope.showProducts = false;
+    }
+
+    // load products from selected category, set proper history state
+    $scope.displayProduct = function (id){
       $scope.showProducts = !$scope.showProducts;
+
+      stateObj.displayProducts = !stateObj.displayProducts;
+      window.history.replaceState(stateObj, '', '');
 
       if($scope.showProducts && lastCategory != id){
         delete $scope.products;
+
+        stateObj.categoryToShow = id;
+        window.history.replaceState(stateObj, '', '');
 
         $http.get('/get/products/' + id)
         .then( res => {
@@ -68,7 +101,6 @@ angular
     $scope.addToCart = function( id ){
       $http.post('/add/cart', {id: id})
       .then( () => {
-        console.log('Added: ' + id);
         getCart();
       });
     }
@@ -98,7 +130,6 @@ angular
     }
 
     $scope.deleteFromCart = function(id){
-      console.log('To delete: ' + id);
       $http.post('/delete/cart',  {id: id})
         .then( () => {
           getCart();
