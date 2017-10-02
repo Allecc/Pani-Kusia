@@ -1,0 +1,33 @@
+<div id="product" class="col-sm-12">
+  <div class="row">
+    <div class="col-md-12">
+      <h3>
+        <a href='./#!/' ng-click="displayProduct(-1)">
+          <i aria-hidden="true" class="fa fa-angle-double-left fa-lg"></i>
+          <span> Kategorie</span>
+        </a>
+      </h3>
+    </div>
+  </div>
+  <div class="row">
+    <div ng-repeat="product in products" class="col-md-3 col-sm-6 productContainer">
+      <a>
+        <img ng-src="/images/products/{{ product.image }}.jpeg" ng-mouseover="product.show = !product.show" ng-mouseleave="product.show = !product.show" alt="product{{product.id}}"/>
+        <div ng-show="product.show" ng-mouseover="product.show = 'true';" ng-mouseleave="product.show = !product.show" class="overlay">
+          <div class="textOverly">
+            <h2>{{product.title}}</h2><span>{{ product.description }}</span>
+            <div class="product-price">
+              <span ng-if="product.storage == 0" class="noProduct col-md-12">
+                <i class="fa fa-window-close"></i> Brak produktu!</span>
+              <span class="col-md-6">
+                <a href="" ng-click="addToCart(product.id)" class="products-links">
+                  <i aria-hidden="true" class="fa fa-shopping-cart fa-lg"></i> Cena {{product.price | currency: '': 2}}
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>

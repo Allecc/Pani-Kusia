@@ -95,10 +95,13 @@ router.get('/', function(req, res) {
   res.render('index');
 });
 
-router.get('/register', function(req, res){
-  res.render('register');
+router.get('/order', function(req, res){
+  res.render('order');
 });
 
+router.get('/products', function(req, res){
+  res.redirect('/');
+});
 
 /* User endpoints */
 /* Get register page */
@@ -185,6 +188,17 @@ router.get('/get/products', function(req, res){
 });
 
 
+router.put('/edit/product', function(req,res){
+  let product = req.body;
+
+  Product.findById(product.id)
+  .then( target => {
+    target.update(product)
+    .then( () => {
+      res.status(200).end();
+    });
+  });
+});
 router.get('/get/products/:id', function(req, res){
   let catId = req.params.id;
   Product.findAll({ where: { CategoryId: catId }})

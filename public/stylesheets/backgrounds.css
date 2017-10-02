@@ -31,7 +31,7 @@
 /* Forth image (Footer) */
 .parallax4 {
   background-image: url("/images/parallax4.jpeg");
-  min-height: 250px;
+  min-height: 100px;
 }
 
 .parallax-center {

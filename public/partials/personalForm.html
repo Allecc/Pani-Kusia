@@ -1,0 +1,34 @@
+<form>
+  <label>Dane osobowe</label>
+    <div class="form-group">
+      <input ng-model="user.name" placeholder="Imie" oninvalid="invalidField(this)" required="required" class="form-control"/>
+      <input ng-model="user.forname" placeholder="Nazwisko" oninvalid="invalidField(this)" required="required" class="form-control"/>
+    </div>
+    <label>Adres</label>
+    <div class="form-group">
+      <input ng-model="user.street" placeholder="Ulica, numer" oninvalid="invalidField(this)" required="required" class="form-control"/>
+      <input ng-model="user.post" placeholder="Kod pocztowy" oninvalid="invalidField(this)" required="required" class="form-control"/>
+      <input ng-model="user.city" placeholder="Miasto" oninvalid="invalidField(this)" required="required" class="form-control"/>
+    </div>
+    <label>Kontakt</label>
+    <div class="form-group">
+      <input ng-model="user.telephone" placeholder="Numer telefonu" oninvalid="invalidField(this)" required="required" class="form-control"/>
+      <input ng-model="user.mail" placeholder="E-Mail" class="form-control"/>
+      <input ng-model="user.telephone2" placeholder="Numer telefonu 2" class="form-control"/>
+    </div>
+    <div class="form-group">
+      <p id="warningMessage">Czerwone pola muszą zostac wypełnione!</p>
+      <a ui-sref="confirmCart" ui-sref-active="active">
+        <button class="btn btn-default">Cofnij</button>
+      </a>
+      <button type='submit' ng-click='paymentState' class="btn btn-default">Płatność</button>
+    </div>
+  </form>
+
+<script>
+$().ready(function(){
+  $('input').on('keyup', function() {
+       $(this).removeClass('wrongElement');
+     });
+});
+</script>

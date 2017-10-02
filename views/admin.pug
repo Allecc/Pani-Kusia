@@ -31,6 +31,36 @@ block content
           .modal-footer
             button.btn.btn-success(type='button', ng-click='addProduct()') Zapisz
             button.btn.btn-danger(type='button', data-dismiss='modal') Zamknij
+  mixin modalEditProduct
+    #modalEditProduct.modal.fade(role='dialog', ng-if='tab.products')
+      .modal-dialog.modal-lg
+        // Modal content
+        .modal-content
+          .modal-title
+            h2 Edytuj produkt
+          form.modal-body              
+            .form-group
+              label Nazwa: 
+              input.form-control(type='text', ng-model='product.title')
+            .form-group
+              label Opis: 
+              textarea.form-control(rows='2', ng-model='product.description')   
+            .form-group
+              label Cena: 
+              input.form-control(type='text', ng-model='product.price')   
+            .form-group
+              label Zdjęcie: 
+              input.form-control(type='text', ng-model='product.image') 
+            .form-group
+              label Kategoria:
+              ol
+                li(ng-repeat='category in categories')
+                  input(type='radio', name='kategoria', ng-model='product.CategoryId', value='{{category.id}}') 
+                  span  {{category.name}}  
+            pre.form-group {{product}}              
+          .modal-footer
+            button.btn.btn-success(type='button', ng-click='editProduct(product)') Zapisz
+            button.btn.btn-danger(type='button', data-dismiss='modal') Zamknij
   mixin modalAddCategory
     #modalAddCategory.modal.fade(role='dialog', ng-if='tab.products')
       .modal-dialog.modal-sm
@@ -91,77 +121,67 @@ block content
           .modal-footer
             button.btn.btn-success(type='button', ng-click='editContact()') Zapisz
             button.btn.btn-danger(type='button', data-dismiss='modal') Zamknij  
-  .row(style='margin-top: 5%')
-    ul.col-md-2.nav
-      li.btn.btn-default.col-md-12(ng-click='informationTab()') Dashboard
-      li.btn.btn-default.col-md-12(ng-click='userTab()') Użytkownicy
-      li.btn.btn-default.col-md-12(ng-click='productsTab()') Produkty
-      li.btn.btn-default.col-md-12(ng-click='aboutTab()') O Mnie
-      li.btn.btn-default.col-md-12(ng-click='contactTab()') Kontakt
-    .col-md-10
-      .row
-        .col-md-12(ng-if='tab.dashboard')
-          h1.center Jakiś tekst informacyjny
-        .col-md-12(ng-if='tab.users')
-          ul
-            li(repeat='user in users') {{user}}
-        .col-md-12(ng-if='tab.products')
-          .row
-            .col-md-12 
-              h3 Produkty
-              hr
-          .row
-            button.btn.btn-default.col-md-6(data-toggle="modal" data-target="#modalAddProduct") Dodaj Produkt
-            button.btn.btn-default.col-md-6(data-toggle="modal" data-target="#modalAddCategory") Dodaj Kategorię
-          .row              
+  .col-md-12(style='margin-top: 5%')
+    #mainAdmin.row
+      ul.col-md-2.nav
+        li.btn.btn-default.col-md-12(ng-click='informationTab()') Dashboard
+        li.btn.btn-default.col-md-12(ng-click='userTab()') Użytkownicy
+        li.btn.btn-default.col-md-12(ng-click='productsTab()') Produkty
+        li.btn.btn-default.col-md-12(ng-click='aboutTab()') O Mnie
+        li.btn.btn-default.col-md-12(ng-click='contactTab()') Kontakt
+      .col-md-10
+        .row
+          .col-md-12(ng-if='tab.dashboard')
+            h1.center Jakiś tekst informacyjny
+          .col-md-12(ng-if='tab.users')
+            ul
+              li(repeat='user in users') {{user}}
+          .col-md-12(ng-if='tab.products')
+            .row
+              .col-md-12 
+                h3 Produkty
+                hr
+            .row
+              button.btn.btn-default.col-md-6(data-toggle="modal" data-target="#modalAddProduct") Dodaj Produkt
+              button.btn.btn-default.col-md-6(data-toggle="modal" data-target="#modalAddCategory") Dodaj Kategorię
+            .row              
+              .col-md-12
+                .row(ng-repeat='category in categories')
+                  .col-md-12
+                    .row
+                      h3.col-md-10 {{category.name}}
+                      button.col-md-2.btn.btn-default Edit
+                      hr.col-md-12
+                    .row
+                      .block.well.col-md-4(ng-repeat='product in products | filter: { CategoryId: category.id }') 
+                        button.btn.btn-default.col-md-12(data-toggle="modal" data-target="#modalEditProduct") Edytuj
+                        strong {{product.title}}
+                        p {{product.description}}
+                        p {{product.image}}
+                        .row
+                          strong.col-md-6 Cena: {{product.price}}
+                          strong.col-md-6(ng-if='product.CategoryId != NULL') Kategoria: {{product.CategoryId}}
+                        +modalEditProduct
+          .col-md-12(ng-if='tab.about')
+            button.btn.btn-default(data-toggle="modal" data-target="#modalEditAbout") Edytuj
             .col-md-12
-              .row(ng-repeat='category in categories')
-                .col-md-12
-                  .row
-                    h3.col-md-10 {{category.name}}
-                    button.col-md-2.btn.btn-default Edit
-                    hr.col-md-12
-                  .row
-                    .well.col-md-4(ng-repeat='product in products | filter: { CategoryId: category.id }') 
-                      strong {{product.title}}
-                      p {{product.description}}
-                      p {{product.image}}
-                      .row
-                        strong.col-md-6 Cena: {{product.price}}
-                        strong.col-md-6(ng-if='product.CategoryId != NULL') Kategoria: {{product.CategoryId}}
-              .row
-                .col-md-12
-                  h3 Bez kategorii
-                .row  
-                  hr.col-md-12
-                  .row
-                    .well.col-md-4(ng-repeat='product in products | filter: { CategoryId: "!" }') 
-                      strong {{product.title}}
-                      p {{product.description}}
-                      p {{product.image}}
-                      .row
-                        strong.col-md-6 Cena: {{product.price}}
-                        strong.col-md-6 Kategoria: {{product.CategoryId}}
-        .col-md-12(ng-if='tab.about')
-          button.btn.btn-default(data-toggle="modal" data-target="#modalEditAbout") Edytuj
-          .col-md-12
-            h2 {{about.title}}
-            p {{about.content}}
-        .col-md-12(ng-if='tab.contact')
-          button.btn.btn-default(data-toggle="modal" data-target="#modalEditContact") Edytuj    		
-          .col-md-12
-            span {{contact.street}}
-            br 
-            span {{contact.post}}
-            .contacts
-              i.fa.fa-phone-square.fa-lg(aria-hidden='true')
-                span  {{contact.telephone}}
-              br
-              i.fa.fa-envelope.fa-lg(aria-hidden='true')
-                span  {{contact.mail}}
-  +modalAddProduct
-  +modalAddCategory
-  +modalEditAbout
-  +modalEditContact
+              h2 {{about.title}}
+              p {{about.content}}
+          .col-md-12(ng-if='tab.contact')
+            button.btn.btn-default(data-toggle="modal" data-target="#modalEditContact") Edytuj    		
+            .col-md-12
+              span {{contact.street}}
+              br 
+              span {{contact.post}}
+              .contacts
+                i.fa.fa-phone-square.fa-lg(aria-hidden='true')
+                  span  {{contact.telephone}}
+                br
+                i.fa.fa-envelope.fa-lg(aria-hidden='true')
+                  span  {{contact.mail}}
+    +modalAddProduct
+    +modalAddCategory
+    +modalEditAbout
+    +modalEditContact
 
-  script(src='../javascripts/admin.js')    
+    script(src='../javascripts/admin.js')    

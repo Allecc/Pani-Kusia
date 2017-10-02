@@ -1,0 +1,39 @@
+<form>
+  <div ng-if="cart.totalQty == 0" class="form-group">
+    <ul class="col-md-12">
+      <li class="row text-center">Koszyk jest pusty</li>
+    </ul>
+  </div>
+  <div ng-if="cart.totalQty > 0" class="form-group">
+    <ul class="col-md-12">
+      <li class="row">
+        <span class="col-md-3"><strong>Produkt</strong></span>
+        <span class="col-md-2"><strong>Sztuk</strong></span>
+        <span class="col-md-3"><strong>Cena za sztukę</strong></span>
+        <span class="col-md-2"><strong>Cena</strong></span>
+        <span class="col-md-2"></span>
+      </li>
+      <li ng-repeat="item in cart.items" class="row"><span class="col-md-3">
+        <strong>{{ item.item.title }}</strong></span>
+        <span class="col-md-2">{{ item.qty }}</span>
+        <span class="col-md-3">{{ item.item.price }}</span>
+        <span class="col-md-2">{{ item.price }}</span>
+        <span class="col-md-2">
+          <a href="" ng-click="addToCart(item.item.id)"><i class="fa fa-plus adding-color"></i></a>
+          <a href="" ng-click="deleteFromCart(item.item.id)"><i class="fa fa-times removing-color"></i></a>
+        </span>
+      </li>
+      <li id="final-cart-row" class="row">
+        <span class="col-md-offset-5 col-md-3"><strong>Ilośc: </strong>
+        <span>{{ cart.totalQty }}</span></span>
+        <span class="col-md-3"><strong>Suma: </strong>
+        <span>{{ cart.totalPrice }}</span></span>
+      </li>
+    </ul>
+    <div class="form-group">
+      <a ui-sref="personalForm" ui-sref-active="active">
+        <button class="btn btn-default">Dalej </button>
+      </a>
+    </div>
+  </div>
+</form>

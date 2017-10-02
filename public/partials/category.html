@@ -1,0 +1,10 @@
+<div id="category" ng-repeat="category in categories" class="col-md-3 col-sm-6">
+  <a href='/#!/products' class="productContainer" ng-click="displayProduct(category.id); category.show = !category.show;">
+    <img ng-src="/images/{{ category.image }}" ng-mouseover="category.show = !category.show" ng-mouseleave="category.show = !category.show" alt="category{{category.id}}"/>
+    <div ng-show="category.show" ng-mouseover="category.show = 'true';" ng-mouseleave="category.show = !category.show" class="overlay">
+      <div class="textOverly">
+        <h2>{{category.name}}		</h2>
+      </div>
+    </div>
+  </a>
+</div>

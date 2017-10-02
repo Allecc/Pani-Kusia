@@ -10,6 +10,10 @@ body.modal-open {
     overflow: visible;
 }
 
+.modal-content {
+  padding: 15px;
+}
+
 .go-right {
   float: right!important;
 }
@@ -66,6 +70,47 @@ background-color: #757575;
   text-decoration: none;
 }
 
+.adding-color {
+  color: green;
+}
+
+.adding-color:hover {
+  color: darkgreen;
+}
+
+#final-cart-row {
+  margin-top: 15px;
+}
+
+.removing-color {
+  color: red;
+}
+
+.removing-color:hover {
+  color: darkred;
+}
+
+/* Order form inputs, wrong inputs will have red borders */
+/* Needs to overwrite bootstrap */
+.wrongElement {
+  border-color: rgb(255, 80, 80)!important;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(255, 80, 80,.6)!important;
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(255, 80, 80,.6)!important;
+
+}
+
+.wrongElement:focus {
+  border-color: rgb(255, 80, 80)!important;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(255, 80, 80,.6)!important;
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(255, 80, 80,.6)!important;
+}
+/* End order form inputs */
+
+#warningMessage {
+  color: red;
+  display: none;
+}
+
 #bottomIcons {
   padding: 0!important;
 }
@@ -74,6 +119,6 @@ ul {
   list-style-type: none;
 }
 
-.modal-content {
+#mainAdmin {
   padding: 15px;
 }

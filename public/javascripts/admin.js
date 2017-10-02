@@ -55,7 +55,7 @@ angular
       description: '',
       price: '',
       image: '',
-      CategoryId: null
+      CategoryId: 0
     }
 
     // get products
@@ -133,6 +133,13 @@ angular
 
       $http.put('/edit/about', about)
         .then(function (){
+          location.reload();
+        });
+    }
+
+    $scope.editProduct = function(product){
+      $http.put('/edit/product', product)
+        .then(function() {
           location.reload();
         });
     }

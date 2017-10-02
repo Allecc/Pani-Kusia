@@ -1,6 +1,31 @@
 angular
-  .module('paniKusia', [])
-  .controller('kusiaCtrl', function ($scope, $window, $http) {
+  .module('paniKusia', ['ui.router'])
+  .config(function($locationProvider, $urlRouterProvider, $stateProvider, $anchorScrollProvider) {
+    let categoryState = {
+      name: 'categoryState',
+      url: '/',
+      templateUrl: '/partials/category.html'
+    }
+
+    let productsState = {
+      name: 'productsState',
+      url: '/products',
+      templateUrl: '/partials/products.html'
+    }
+
+    $stateProvider.state(categoryState);
+    $stateProvider.state(productsState);
+
+    $locationProvider.html5Mode(true);
+    $urlRouterProvider.otherwise('/');
+    $anchorScrollProvider.disableAutoScrolling()
+  })
+  .controller('kusiaCtrl', function ($scope, $window, $http, $location, $anchorScroll) {
+    $scope.scrollTo = function(id) {
+      $location.hash(id);
+      $anchorScroll();
+     }
+
     var screenWidth = $window.innerWidth;
     if(screenWidth < 1024){
       $scope.displayText = 'true'
@@ -47,47 +72,13 @@ angular
         $scope.categories = res.data;
       });
 
-      // Set state on page pload
-      var stateObj = {
-        'categoryToShow': -1,
-        'displayProducts': false
-      };
-
-    //$().ready(function(){
-      if(!window.history.state){
-       window.history.pushState(stateObj, '', '');
-     }
-     console.log(window.history.state);
-    //});
-
-    // Show products in CategoryId
-    let lastCategory = window.history.state.categoryToShow;
+    let lastCategory = -1
     // display last selected category
-    if(lastCategory >= 0 && window.history.state.displayProducts){
-      $http.get('/get/products/' + lastCategory)
-      .then( res => {
-          $scope.products = res.data;
-      });
-      $scope.showProducts = true;
-      stateObj.displayProducts = true;
-
-      window.history.replaceState(stateObj, '', '');
-    } else {
-      $scope.showProducts = false;
-    }
 
     // load products from selected category, set proper history state
     $scope.displayProduct = function (id){
-      $scope.showProducts = !$scope.showProducts;
-
-      stateObj.displayProducts = !stateObj.displayProducts;
-      window.history.replaceState(stateObj, '', '');
-
-      if($scope.showProducts && lastCategory != id){
+      if(lastCategory != id){
         delete $scope.products;
-
-        stateObj.categoryToShow = id;
-        window.history.replaceState(stateObj, '', '');
 
         $http.get('/get/products/' + id)
         .then( res => {
@@ -137,3 +128,4 @@ angular
     }
     /*----------- End cart section ---------*/
 });
+//.value('$anchorScroll', angular.noop);
